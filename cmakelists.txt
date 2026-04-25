@@ -1,0 +1,11 @@
+cmake_minimum_required(3.30)
+
+include(FetchContent)
+
+FetchContent_Declare(
+    lua
+    GIT_REPOSITORY "https://github.com/marovira/lua"
+    GIT_TAG "<latest-commit-hash>"
+)
+
+FetchContent_MakeAvailable(lua)
