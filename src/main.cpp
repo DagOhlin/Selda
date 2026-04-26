@@ -4,9 +4,18 @@
 #include <lualib.h>
 #include <lauxlib.h>
 #include <raylib.h>
+#include <string>
+
+// create simpleEnemy
+
+#include "scene.h"
 
 int main()
 {
+    Scene scene;
+
+    scene.CreateObject().Add<int>(15).Add<std::string>("Hello there").Build();
+
     const int screenWidth = 800;
     const int screenHeight = 450;
 
@@ -18,16 +27,12 @@ int main()
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
-        // Update
-        //----------------------------------------------------------------------------------
-        // TODO: Update your variables here
-        //----------------------------------------------------------------------------------
-
-        // Draw
-        //----------------------------------------------------------------------------------
+        // Tick
         BeginDrawing();
 
         ClearBackground(RAYWHITE);
+
+        // Draw objects
 
         DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
 
