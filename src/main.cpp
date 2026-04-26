@@ -33,7 +33,6 @@ int main()
     UnloadImage(image);
 
     scene.CreateObject()
-        .Add<int>(15)
         .Add<Position>(Vector2{100.f, 100.f})
         .Add<Texture2D>(blinkTex)
         .Build();
