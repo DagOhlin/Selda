@@ -12,6 +12,7 @@
 #include "components/box.h"
 #include "components/clickable.h"
 #include "components/colour.h"
+#include"components/charachterController.h"
 
 
 int main()
@@ -42,6 +43,7 @@ int main()
         .Add<Position>(Vector2{100.f, 100.f})
         .Add<Sprite>(blinkTex)
         .Add<Scale>(8.f)
+        .Add<CharachterController>(30.f)
         .Build();
 
     scene.CreateEntity().Add<Box>(200.f, 200.f, 60.f , 60.f).Add<Clickable>([](){std::cout<< "stop touching me" << std::endl;}).Add<Colour>(Color{255, 255, 0, 255});

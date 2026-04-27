@@ -3,6 +3,7 @@
 #include <entt/entt.hpp>
 #include "systems/drawable.h"
 #include "systems/button.h"
+#include "systems/charachterControllSystem.h"
 
 // #include <
 
@@ -44,6 +45,7 @@ inline void Scene::Update()
 {
     DrawSystem::Draw(this->GetRegistry());
     ButtonSystem::Draw(this->GetRegistry());
+    CharachterControllSystem::MoveBasedOnInput(this->GetRegistry());
 }
 inline Scene *Scene::Get()
 {

@@ -14,11 +14,12 @@ struct ButtonSystem
 
         for (auto [entity, box, clickable, colour] : view.each())
         {
-            if (CheckCollisionPointRec(GetMousePosition(), box.rectangle))
+            if (CheckCollisionPointRec(GetMousePosition(), box.rectangle) && IsMouseButtonPressed(0))
             {
                 /* code */
                 clickable.callBack();
             }
+           
             
             DrawRectangle(box.rectangle.x, box.rectangle.y, box.rectangle.width, box.rectangle.height, colour.color);
         }
