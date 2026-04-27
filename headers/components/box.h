@@ -2,8 +2,8 @@
 
 #include <raylib.h>
 
-struct Sprite
+struct Box
 {
     /* data */
-    Texture2D texture;
+    Rectangle rectangle;
 };

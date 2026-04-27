@@ -127,7 +127,7 @@ inline void Lua::DumpStack()
 
 inline int Lua::CreateEntity(lua_State *lua_state)
 {
-    auto entity = Scene::Get()->CreateObject().Build();
+    auto entity = Scene::Get()->CreateEntity().Build();
     lua_pushnumber(lua_state, (int)entity);
 
     return 1;

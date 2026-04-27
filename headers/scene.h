@@ -2,6 +2,8 @@
 
 #include <entt/entt.hpp>
 #include "systems/drawable.h"
+#include "systems/button.h"
+
 // #include <
 
 class ObjectBuilder
@@ -22,7 +24,7 @@ private:
 class Scene
 {
 public:
-    ObjectBuilder CreateObject();
+    ObjectBuilder CreateEntity();
     entt::registry &GetRegistry();
     void Update();
     template <typename T>
@@ -41,6 +43,7 @@ entt::registry &Scene::GetRegistry()
 inline void Scene::Update()
 {
     DrawSystem::Draw(this->GetRegistry());
+    ButtonSystem::Draw(this->GetRegistry());
 }
 inline Scene *Scene::Get()
 {
@@ -49,7 +52,7 @@ inline Scene *Scene::Get()
     return Scene::self.get();
 }
 // Scene functions
-ObjectBuilder Scene::CreateObject()
+ObjectBuilder Scene::CreateEntity()
 {
     return ObjectBuilder(this->registry);
 }
