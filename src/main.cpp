@@ -7,6 +7,7 @@
 #include "components/position.h"
 #include "scene.h"
 #include "luabindings.h"
+#include "components/scale.h"
 
 int main()
 {
@@ -27,7 +28,7 @@ int main()
 
     lua.DumpStack();
 
-    auto image = LoadImage("Blink.png");
+    auto image = LoadImage("Blink2.png");
     // ImageResizeNN(&image, 128, 128);
     auto blinkTex = LoadTextureFromImage(image);
     UnloadImage(image);
@@ -35,6 +36,7 @@ int main()
     scene.CreateObject()
         .Add<Position>(Vector2{100.f, 100.f})
         .Add<Texture2D>(blinkTex)
+        .Add<Scale>(8.f)
         .Build();
 
     SetTargetFPS(60); // Set our game to run at 60 frames-per-second
@@ -49,10 +51,7 @@ int main()
         ClearBackground(RAYWHITE);
 
         // Draw objects
-        for (auto [entity, texture, position] : scene.GetRegistry().view<Texture2D, Position>().each())
-        {
-            DrawTextureEx(texture, position.pos, 0, 8, Color{255, 255, 255, 255});
-        }
+        scene.Update();
         DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
 
         EndDrawing();

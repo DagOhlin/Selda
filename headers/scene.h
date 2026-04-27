@@ -1,13 +1,15 @@
 #pragma once
 
 #include <entt/entt.hpp>
+#include "systems/drawable.h"
+// #include <
 
 class ObjectBuilder
 {
 public:
     template <typename T, typename... Args>
     ObjectBuilder &Add(Args &&...args);
-    void Build();
+    entt::entity Build();
     friend class Scene;
 
 private:
@@ -22,14 +24,29 @@ class Scene
 public:
     ObjectBuilder CreateObject();
     entt::registry &GetRegistry();
+    void Update();
+    template <typename T>
+    void AddComponent(entt::entity entity);
+    inline static Scene *Get();
 
 private:
     entt::registry registry;
+    inline static std::unique_ptr<Scene> self;
 };
 
 entt::registry &Scene::GetRegistry()
 {
     return this->registry;
+}
+inline void Scene::Update()
+{
+    DrawSystem::Draw(this->GetRegistry());
+}
+inline Scene *Scene::Get()
+{
+    if (!Scene::self.get())
+        Scene::self = std::make_unique<Scene>();
+    return Scene::self.get();
 }
 // Scene functions
 ObjectBuilder Scene::CreateObject()
@@ -45,7 +62,13 @@ template <typename T, typename... Args>
     return *this;
 }
 
-void ObjectBuilder::Build()
+entt::entity ObjectBuilder::Build()
 {
-    return;
+    return this->entity;
+}
+
+template <typename T>
+inline void Scene::AddComponent(entt::entity entity)
+{
+    this->registry.emplace<T>(entity);
 }
