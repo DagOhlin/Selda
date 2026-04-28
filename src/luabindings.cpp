@@ -9,6 +9,8 @@
 #include "components/colour.h"
 #include "components/position.h"
 #include "components/speed.h"
+#include "components/text.h"
+
 #include "util.h"
 
 Lua::Lua() : lua_state(luaL_newstate())
@@ -172,6 +174,22 @@ int Lua::AddComponent(lua_State *lua_state)
         std::string funcName = lua->PopString(ic.Get());
         lua_setglobal(lua_state, funcName.data());
         Scene::Get()->AddComponent<Clickable>(entity, funcName);
+    }
+    else if (component == "Text")
+    {
+        std::string text = lua->PopString(ic.Get());
+
+        float x = lua->PopFloat(ic.Get()); 
+        float y = lua->PopFloat(ic.Get());
+
+        float fontSize = lua->PopFloat(ic.Get());
+
+        unsigned char r = lua->PopInt(ic.Get());
+        unsigned char g = lua->PopInt(ic.Get());
+        unsigned char b = lua->PopInt(ic.Get());
+        unsigned char a = lua->PopInt(ic.Get());
+
+        Scene::Get()->AddComponent<Text>(entity, Color{r, g, b, a}, text,  Vector2{x, y}, fontSize);
     }
     else
         throw std::runtime_error(std::string("Dis is no component, here atleast") + std::string(component));

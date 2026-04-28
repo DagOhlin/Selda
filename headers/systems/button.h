@@ -3,6 +3,7 @@
 #include <raylib.h>
 #include <entt/entt.hpp>
 #include <lua.hpp>
+#include <iostream>
 
 #include "luabindings.h"
 
@@ -10,6 +11,8 @@
 #include "components/box.h"
 #include "components/colour.h"
 #include "components/clickable.h"
+#include "components/text.h"
+
 
 struct ButtonSystem
 {
@@ -27,6 +30,13 @@ struct ButtonSystem
             }
 
             DrawRectangle(box.rectangle.x, box.rectangle.y, box.rectangle.width, box.rectangle.height, colour.color);
+            Text *maybeText = registry.try_get<Text>(entity);
+            if(maybeText){
+                //std::cout << "it has text" << std::endl;
+                DrawText("Congrats! You created your first window!", 190, 300, 20, LIGHTGRAY);
+
+                DrawText(maybeText->text.c_str(), box.rectangle.y, box.rectangle.width, maybeText->fontSize, maybeText->color);
+            }
         }
     }
 };
