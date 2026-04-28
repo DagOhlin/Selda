@@ -32,10 +32,7 @@ struct ButtonSystem
             DrawRectangle(box.rectangle.x, box.rectangle.y, box.rectangle.width, box.rectangle.height, colour.color);
             Text *maybeText = registry.try_get<Text>(entity);
             if(maybeText){
-                //std::cout << "it has text" << std::endl;
-                DrawText("Congrats! You created your first window!", 190, 300, 20, LIGHTGRAY);
-
-                DrawText(maybeText->text.c_str(), box.rectangle.y, box.rectangle.width, maybeText->fontSize, maybeText->color);
+                DrawText(maybeText->text.c_str(), box.rectangle.x + maybeText->pos.x, box.rectangle.y + maybeText->pos.y, maybeText->fontSize, maybeText->color);
             }
         }
     }

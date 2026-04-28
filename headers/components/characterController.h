@@ -1,7 +1,7 @@
 #pragma once 
 
 
-struct CharachterController
+struct CharacterController
 {
     /* data */
     float speed; 
