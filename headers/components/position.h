@@ -2,10 +2,7 @@
 
 #include <raylib.h>
 
-class Position
+struct Position
 {
-public:
     Vector2 pos;
-
-private:
 };

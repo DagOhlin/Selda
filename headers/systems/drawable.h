@@ -1,11 +1,14 @@
+#pragma once
+
 #include <raylib.h>
-#include "components/position.h"
 #include <entt/entt.hpp>
+
+#include "components/position.h"
 #include "components/scale.h"
 #include "components/sprite.h"
 struct DrawSystem
 {
-    static void Draw(entt::registry &registry)
+    inline static void Draw(entt::registry &registry)
     {
         auto view = registry.view<Sprite, Position>();
 

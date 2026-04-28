@@ -2,10 +2,7 @@
 
 #include <raylib.h>
 
-class Speed
+struct Speed
 {
-public:
     Vector2 speed;
-
-private:
 };
