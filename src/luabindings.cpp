@@ -130,7 +130,7 @@ int Lua::CreateEntity(lua_State *lua_state)
 
 int Lua::AddComponent(lua_State *lua_state)
 {
-    auto ic = Incrementer();
+    auto ic = Incrementer(1);
     Lua *lua = Lua::Get();
     const entt::entity entity = (entt::entity)lua->PopInt(ic.Get());
     std::string component = lua->PopString(ic.Get());
@@ -144,7 +144,7 @@ int Lua::AddComponent(lua_State *lua_state)
 
         Scene::Get()->AddComponent<Position>(entity, x, y);
     }
-    if (component == "Box")
+    else if (component == "Box")
     {
         float x = lua->PopFloat(ic.Get());
         float y = lua->PopFloat(ic.Get());
@@ -153,12 +153,12 @@ int Lua::AddComponent(lua_State *lua_state)
 
         Scene::Get()->AddComponent<Box>(entity, x, y, width, height);
     }
-    if (component == "Colour")
+    else if (component == "Colour")
     {
-        unsigned char r = lua->PopFloat(ic.Get());
-        unsigned char g = lua->PopFloat(ic.Get());
-        unsigned char b = lua->PopFloat(ic.Get());
-        unsigned char a = lua->PopFloat(ic.Get());
+        unsigned char r = lua->PopInt(ic.Get());
+        unsigned char g = lua->PopInt(ic.Get());
+        unsigned char b = lua->PopInt(ic.Get());
+        unsigned char a = lua->PopInt(ic.Get());
 
         Scene::Get()->AddComponent<Colour>(entity, r, g, b, a);
     }
@@ -174,7 +174,7 @@ int Lua::AddComponent(lua_State *lua_state)
         Scene::Get()->AddComponent<Clickable>(entity, funcName);
     }
     else
-        throw std::runtime_error("Dis is no component, here atleast");
+        throw std::runtime_error(std::string("Dis is no component, here atleast") + std::string(component));
 
     auto func = lua_tocfunction(lua_state, -1);
 
