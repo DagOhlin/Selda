@@ -5,4 +5,6 @@
 struct BoxCollider
 {
     /* data */
+    Vector2 size;
+    bool solid;
 };
