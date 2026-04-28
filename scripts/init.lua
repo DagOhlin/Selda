@@ -19,3 +19,10 @@ end
 
 creatables.button(100, 100, SuperDuperFunc)
 creatables.button(400, 100, SuperDuperFunc)
+
+player = CreateEntity();
+
+AddComponent(player, "Position", 100.0, 100.0);
+AddComponent(player, "Sprite", "textures/Blink2.png"); 
+AddComponent(player, "Scale", 8.0);
+AddComponent(player, "CharacterController", 30.0);

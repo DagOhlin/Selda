@@ -210,6 +210,11 @@ int Lua::AddComponent(lua_State *lua_state)
         std::cout << scale << "\n";
         Scene::Get()->AddComponent<Scale>(entity, scale);
     }
+    else if (component == "CharacterController")
+    {
+        float speed = lua->PopFloat(ic.Get());
+        Scene::Get()->AddComponent<CharacterController>(entity, speed);
+    }
     else
         throw std::runtime_error(std::string("Dis is no component, here atleast") + std::string(component));
 
