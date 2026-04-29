@@ -20,10 +20,12 @@ class Scene
 {
 public:
     ObjectBuilder CreateEntity();
-    entt::registry &GetRegistry();
     void Update();
+    void Clear();
+
     template <typename T, typename... Args>
     inline void AddComponent(entt::entity entity, Args &&...args);
+    entt::registry &GetRegistry();
     static Scene *Get();
 
 private:

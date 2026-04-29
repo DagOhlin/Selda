@@ -15,6 +15,11 @@ void Scene::Update()
     CharacterControlSystem::MoveBasedOnInput(this->GetRegistry());
 }
 
+void Scene::Clear()
+{
+    this->registry.clear();
+}
+
 Scene *Scene::Get()
 {
     static std::unique_ptr<Scene> self = std::make_unique<Scene>();
