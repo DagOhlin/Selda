@@ -198,6 +198,7 @@ int Lua::AddComponent(lua_State *lua_state)
     else if (component == "Sprite")
     {
         auto path = lua->PopString(ic.Get());
+
         Image image = LoadImage(path.c_str());
         Texture tex = LoadTextureFromImage(image);
         UnloadImage(image);

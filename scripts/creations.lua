@@ -1,13 +1,17 @@
 print(":)")
 
 creatables = {
-    ground = function() 
-
+    ground = function(x, y) 
+        local ent = CreateEntity()
+        AddComponent(ent, "Sprite", "textures/ground.png")
+        AddComponent(ent, "Position", x, y)
     end,
 
 
-    wall = function()
-
+    wall = function(x, y)
+        local ent = CreateEntity()
+        AddComponent(ent, "Sprite", "textures/wall.png")
+        AddComponent(ent, "Position", x, y)
     end,
 
     enemy = function()

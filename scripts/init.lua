@@ -4,18 +4,19 @@
 
 
 print("hello")
-local success, creatables = pcall(dofile, "scripts/creations.lua")
+-- local success, creatables = pcall(dofile, "scripts/creations.lua")
+-- if not success then
+--     print("Error loading creations.lua: " .. creatables)
+--     return
+-- end
+
+print("Calling Init function")
+
+local success, loadscene = pcall(dofile, "scripts/loadScene.lua")
+print(success, loadscene)
 if not success then
     print("Error loading creations.lua: " .. creatables)
     return
 end
 
-print("Calling Init function")
-
-
-function SuperDuperFunc()  
-    print("Hello there")
-end
-
-creatables.button(100, 100, SuperDuperFunc)
-creatables.button(400, 100, SuperDuperFunc)
+loadscene:LoadScene()
