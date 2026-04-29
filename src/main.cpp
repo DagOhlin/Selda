@@ -12,7 +12,7 @@
 #include "components/box.h"
 #include "components/clickable.h"
 #include "components/colour.h"
-#include "components/charachterController.h"
+#include "components/characterController.h"
 
 int main()
 {

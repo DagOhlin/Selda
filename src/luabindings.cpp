@@ -4,7 +4,7 @@
 #include "scene.h"
 
 #include "components/box.h"
-#include "components/charachterController.h"
+#include "components/characterController.h"
 #include "components/clickable.h"
 #include "components/colour.h"
 #include "components/position.h"

@@ -1,7 +1,7 @@
 #include "scene.h"
 #include "systems/drawable.h"
 #include "systems/button.h"
-#include "systems/charachterControllSystem.h"
+#include "systems/characterControlSystem.h"
 
 entt::registry &Scene::GetRegistry()
 {
@@ -12,7 +12,7 @@ void Scene::Update()
 {
     DrawSystem::Draw(this->GetRegistry());
     ButtonSystem::Draw(this->GetRegistry());
-    CharachterControllSystem::MoveBasedOnInput(this->GetRegistry());
+    CharacterControlSystem::MoveBasedOnInput(this->GetRegistry());
 }
 
 Scene *Scene::Get()
