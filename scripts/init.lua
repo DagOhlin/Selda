@@ -27,9 +27,11 @@ AddComponent(player, "Sprite", "textures/Blink2.png");
 AddComponent(player, "Scale", 8.0);
 AddComponent(player, "CharacterController", 30.0);
 AddComponent(player, "Velocity", 50.0, 0.0, 0.0);
-AddComponent(player, "BoxCollider", 144.0, 144.0, true);
+AddComponent(player, "BoxCollider", 7 * 8, 16 * 8, true);
 
 obstacle = CreateEntity();
 
-AddComponent(player, "Position", 300.0, 300.0);
-AddComponent(player, "BoxCollider", 32.0, 32.0, true);
+AddComponent(obstacle, "Position", 300.0, 300.0);
+AddComponent(obstacle, "BoxCollider", 16 * 8, 16 * 8, true);
+AddComponent(obstacle, "Sprite", "textures/wall.png"); 
+AddComponent(obstacle, "Scale", 8.0);
