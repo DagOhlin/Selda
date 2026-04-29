@@ -3,17 +3,20 @@
 -- AddComponent(entity, string Component, args...)
 
 
-print("Calling Init function");
+print("hello")
+-- local success, creatables = pcall(dofile, "scripts/creations.lua")
+-- if not success then
+--     print("Error loading creations.lua: " .. creatables)
+--     return
+-- end
 
-button = CreateEntity();
+print("Calling Init function")
 
-function SuperDuperFunc()  
-    print("Hello there");
+local success, loadscene = pcall(dofile, "scripts/loadScene.lua")
+print(success, loadscene)
+if not success then
+    print("Error loading creations.lua: " .. creatables)
+    return
 end
 
-AddComponent(button, "Box", 300, 200, 200, 100);
-AddComponent(button, "Colour", 0, 0, 255, 255);
-AddComponent(button, "Text", "hello", 0, 0, 60, 255, 255, 78, 255);
-
-
-AddComponent(button, "Clickable", "SuperDuperFunc", SuperDuperFunc);
+loadscene:LoadScene()

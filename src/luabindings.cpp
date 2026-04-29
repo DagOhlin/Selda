@@ -10,6 +10,8 @@
 #include "components/position.h"
 #include "components/speed.h"
 #include "components/text.h"
+#include "components/sprite.h"
+#include "components/scale.h"
 
 #include "util.h"
 
@@ -171,15 +173,17 @@ int Lua::AddComponent(lua_State *lua_state)
     }
     else if (component == "Clickable")
     {
-        std::string funcName = lua->PopString(ic.Get());
-        lua_setglobal(lua_state, funcName.data());
+        static size_t callBackNumber = 0;
+
+        std::string funcName = std::string("Callback#") + std::to_string(callBackNumber++);
+        lua_setglobal(lua_state, funcName.c_str());
         Scene::Get()->AddComponent<Clickable>(entity, funcName);
     }
     else if (component == "Text")
     {
         std::string text = lua->PopString(ic.Get());
 
-        float x = lua->PopFloat(ic.Get()); 
+        float x = lua->PopFloat(ic.Get());
         float y = lua->PopFloat(ic.Get());
 
         float fontSize = lua->PopFloat(ic.Get());
@@ -189,7 +193,23 @@ int Lua::AddComponent(lua_State *lua_state)
         unsigned char b = lua->PopInt(ic.Get());
         unsigned char a = lua->PopInt(ic.Get());
 
-        Scene::Get()->AddComponent<Text>(entity, Color{r, g, b, a}, text,  Vector2{x, y}, fontSize);
+        Scene::Get()->AddComponent<Text>(entity, Color{r, g, b, a}, text, Vector2{x, y}, fontSize);
+    }
+    else if (component == "Sprite")
+    {
+        auto path = lua->PopString(ic.Get());
+
+        Image image = LoadImage(path.c_str());
+        Texture tex = LoadTextureFromImage(image);
+        UnloadImage(image);
+
+        Scene::Get()->AddComponent<Sprite>(entity, tex);
+    }
+    else if (component == "Scale")
+    {
+        float scale = lua->PopFloat(ic.Get());
+        std::cout << scale << "\n";
+        Scene::Get()->AddComponent<Scale>(entity, scale);
     }
     else
         throw std::runtime_error(std::string("Dis is no component, here atleast") + std::string(component));
