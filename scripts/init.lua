@@ -25,7 +25,7 @@ player = CreateEntity();
 AddComponent(player, "Position", 100.0, 100.0);
 AddComponent(player, "Sprite", "textures/Blink2.png"); 
 AddComponent(player, "Scale", 8.0);
-AddComponent(player, "CharacterController", 30.0);
+AddComponent(player, "CharacterController", 100.0);
 AddComponent(player, "Velocity", 50.0, 0.0, 0.0);
 AddComponent(player, "BoxCollider", 7 * 8, 16 * 8, true);
 
