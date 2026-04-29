@@ -4,5 +4,5 @@ struct Velocity
 {
     /* data */
     float maxVelocity;
-    float velocity;
+    Vector2 velocity;
 };
