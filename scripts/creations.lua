@@ -29,13 +29,13 @@ creatables = {
     end,
 
     button = function(x, y, func, text, width, height, color, scale)
-        button = CreateEntity()
+        local button = CreateEntity()
 
-        text = text or ""
-        width = width or 100
-        height = height or 50
-        color = color or {r = 0, g = 0, b = 255, a = 255}
-        scale = scale or 1
+        local text = text or ""
+        local width = width or 100
+        local height = height or 50
+        local color = color or {r = 0, g = 0, b = 255, a = 255}
+        local scale = scale or 1
 
         AddComponent(button, "Box", x, y, 200, 100)
         AddComponent(button, "Colour", 40, 40, 40, 255)

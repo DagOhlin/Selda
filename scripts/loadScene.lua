@@ -26,20 +26,44 @@ LoadScene = {}
 function LoadScene:CreateEntities(x, y, block)
     for _, object in ipairs(split(block, ":")) do
         if (object == "Wall") then
-            creatables.wall(x, y) 
+            creatables.wall(x, y)
         elseif (object == "Ground") then
             creatables.ground(x, y)
         elseif (object == "Enemy") then
             creatables.enemy(x, y)
+        elseif (object == "Player") then
+            creatables.player()
         end
     end
 end
 
-function LoadScene:LoadScene()
+function LoadScene:CreateEditorEntities(x, y, block)
+    
+    for _, object in ipairs(split(block, ":")) do
+        local entity = nil
+        if (object == "Wall") then
+            entity = creatables.wall(x, y)
+        elseif (object == "Ground") then
+            entity = creatables.ground(x, y)
+        elseif (object == "Enemy") then
+            entity = creatables.enemy(x, y)
+        elseif (object == "Player") then
+            entity = creatables.player()
+        end
+
+        -- AddComponent(entity, "SetType", )
+    end
+end
+
+function LoadScene:LoadScene(editor)
     local y = 1
     for line in io.lines("scenes/main.simon") do
         for x, block in pairs(split(line, "|"))  do
-            LoadScene:CreateEntities(x * 16, y * 16, block)
+            if editor then
+                LoadScene:CreateEditorEntities(x * 16, y * 16, block)
+            else 
+                LoadScene:CreateEntities(x * 16, y * 16, block)
+            end
         end
         y = y + 1
     end
