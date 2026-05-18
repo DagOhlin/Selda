@@ -236,9 +236,11 @@ int Lua::AddComponent(lua_State *lua_state)
     {
         float width = lua->PopFloat(ic.Get());
         float height = lua->PopFloat(ic.Get());
+        float offsetX = lua->PopFloat(ic.Get());
+        float offsetY = lua->PopFloat(ic.Get());
         bool solid = lua->PopBool(ic.Get()); 
 
-        Scene::Get()->AddComponent<BoxCollider>(entity, Vector2{width, height}, solid);
+        Scene::Get()->AddComponent<BoxCollider>(entity, Vector2{width, height}, Vector2{offsetX, offsetY}, solid);
     }
     else
         throw std::runtime_error(std::string("Dis is no component, here atleast") + std::string(component));

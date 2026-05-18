@@ -24,8 +24,8 @@ struct CollisionSystem
             if (vel.velocity.x != 0.0f)
             {
                 Rectangle nextRectX = {
-                    pos.pos.x + vel.velocity.x * dt,
-                    pos.pos.y,
+                    pos.pos.x + collider.offset.x + vel.velocity.x * dt,
+                    pos.pos.y + collider.offset.y,
                     collider.size.x,
                     collider.size.y
                 };
@@ -35,7 +35,7 @@ struct CollisionSystem
                     if (!otherCollider.solid) continue; 
 
                     Rectangle otherRect = {
-                        otherPos.pos.x, otherPos.pos.y,
+                        otherPos.pos.x + otherCollider.offset.x, otherPos.pos.y + otherCollider.offset.y,
                         otherCollider.size.x, otherCollider.size.y
                     };
 
@@ -51,8 +51,8 @@ struct CollisionSystem
             if (vel.velocity.y != 0.0f)
             {
                 Rectangle nextRectY = {
-                    pos.pos.x + vel.velocity.x * dt, 
-                    pos.pos.y + vel.velocity.y * dt,
+                    pos.pos.x + collider.offset.x + vel.velocity.x * dt, 
+                    pos.pos.y + collider.offset.y + vel.velocity.y * dt,
                     collider.size.x,
                     collider.size.y
                 };
@@ -62,7 +62,7 @@ struct CollisionSystem
                     if (!otherCollider.solid) continue; 
 
                     Rectangle otherRect = {
-                        otherPos.pos.x, otherPos.pos.y,
+                        otherPos.pos.x + otherCollider.offset.x, otherPos.pos.y + otherCollider.offset.y,
                         otherCollider.size.x, otherCollider.size.y
                     };
 
@@ -74,7 +74,7 @@ struct CollisionSystem
                 }
             }
             
-           // uppdate pos based on actuall velocity
+           // update pos based on actual velocity
             pos.pos.x += vel.velocity.x * dt;
             pos.pos.y += vel.velocity.y * dt;
         }
