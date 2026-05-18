@@ -1,5 +1,6 @@
 #pragma once
 #include <entt/entt.hpp>
+#include <lua.hpp>
 
 class ObjectBuilder
 {
@@ -27,6 +28,7 @@ public:
     inline void AddComponent(entt::entity entity, Args &&...args);
     entt::registry &GetRegistry();
     static Scene *Get();
+    static int Save(lua_State *);
 
 private:
     entt::registry registry;

@@ -13,6 +13,7 @@
 #include "components/text.h"
 #include "components/sprite.h"
 #include "components/scale.h"
+#include "components/typeName.h"
 
 #include "util.h"
 
@@ -23,6 +24,7 @@ Lua::Lua() : lua_state(luaL_newstate())
     this->MakeFunc(Lua::AddComponent, "AddComponent");
     this->MakeFunc(Lua::ClearScene, "ClearScene");
     this->MakeFunc(Lua::Quit, "Quit");
+    this->MakeFunc(Scene::Save, "Save");
 }
 
 Lua::~Lua()
@@ -213,6 +215,11 @@ int Lua::AddComponent(lua_State *lua_state)
         float scale = lua->PopFloat(ic.Get());
         std::cout << scale << "\n";
         Scene::Get()->AddComponent<Scale>(entity, scale);
+    }
+    else if (component == "TypeName")
+    {
+        std::string name = lua->PopString(ic.Get());
+        Scene::Get()->AddComponent<TypeName>(entity, name);
     }
     else
         throw std::runtime_error(std::string("Dis is no component, here atleast") + std::string(component));

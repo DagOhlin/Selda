@@ -22,11 +22,15 @@ end
 function Play(entity) 
     ClearScene()
     loadscene:LoadScene(false)
+    Save()
+    Quit()
 end
 
 function Editor(entity)
     ClearScene()
     loadscene:LoadScene(true)
+    Save()
+    Quit()
 end
 
 
