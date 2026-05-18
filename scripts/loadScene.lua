@@ -50,8 +50,9 @@ function LoadScene:CreateEditorEntities(x, y, block)
         elseif (object == "Player") then
             entity = creatables.player()
         end
+        
 
-        -- AddComponent(entity, "SetType", )
+        AddComponent(entity, "TypeName", object)
     end
 end
 

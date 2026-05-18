@@ -68,6 +68,7 @@ int Scene::Save(lua_State *)
     }
     return 0;
 }
+
 // Scene functions
 ObjectBuilder Scene::CreateEntity()
 {
