@@ -3,6 +3,6 @@
 struct Velocity
 {
     /* data */
-    float maxVelocity;
-    float velocity;
+    float maxVelocity; // note that speed in charachter controller is used as max velocity instead for blink
+    Vector2 velocity;
 };

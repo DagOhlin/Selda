@@ -2,6 +2,7 @@
 #include "systems/drawable.h"
 #include "systems/button.h"
 #include "systems/characterControlSystem.h"
+#include "systems/collisionSystem.h"
 #include "systems/editorSystem.h"
 #include "components/typeName.h"
 #include "components/selector.h"
@@ -17,6 +18,7 @@ void Scene::Update()
 {
     DrawSystem::Draw(this->GetRegistry());
     ButtonSystem::Draw(this->GetRegistry());
+    CollisionSystem::Update(this->GetRegistry());
     CharacterControlSystem::MoveBasedOnInput(this->GetRegistry());
     EditorSystem::Click(this->GetRegistry());
 }

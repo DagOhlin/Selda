@@ -13,6 +13,9 @@
 #include "components/text.h"
 #include "components/sprite.h"
 #include "components/scale.h"
+#include "components/boxCollider.h"
+#include "components/velocity.h"
+
 #include "components/typeName.h"
 #include "components/selector.h"
 
@@ -70,6 +73,12 @@ std::string Lua::PopString(int index)
 {
     const char *dataC = lua_tostring(this->lua_state, index);
     std::string data = std::string(dataC);
+    return data;
+}
+
+bool Lua::PopBool(int index)
+{
+    bool data = lua_toboolean(this->lua_state, index);
     return data;
 }
 
@@ -222,6 +231,29 @@ int Lua::AddComponent(lua_State *lua_state)
         float scale = lua->PopFloat(ic.Get());
         std::cout << scale << "\n";
         Scene::Get()->AddComponent<Scale>(entity, scale);
+    }
+    else if (component == "CharacterController")
+    {
+        float speed = lua->PopFloat(ic.Get());
+        Scene::Get()->AddComponent<CharacterController>(entity, speed);
+    }
+    else if (component == "Velocity")
+    {
+        float maxVelocity = lua->PopFloat(ic.Get());
+        float vX = lua->PopFloat(ic.Get());
+        float vY = lua->PopFloat(ic.Get());
+
+        Scene::Get()->AddComponent<Velocity>(entity, maxVelocity, Vector2{vX, vY});
+    }
+    else if (component == "BoxCollider")
+    {
+        float width = lua->PopFloat(ic.Get());
+        float height = lua->PopFloat(ic.Get());
+        float offsetX = lua->PopFloat(ic.Get());
+        float offsetY = lua->PopFloat(ic.Get());
+        bool solid = lua->PopBool(ic.Get());
+
+        Scene::Get()->AddComponent<BoxCollider>(entity, Vector2{width, height}, Vector2{offsetX, offsetY}, solid);
     }
     else if (component == "TypeName")
     {
