@@ -32,7 +32,7 @@ function LoadScene:CreateEntities(x, y, block)
         elseif (object == "Enemy") then
             creatables.enemy(x, y)
         elseif (object == "Player") then
-            creatables.player()
+            creatables.player(x, y)
         end
     end
 end

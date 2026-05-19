@@ -17,6 +17,7 @@
 #include "components/selector.h"
 #include "components/boxCollider.h"
 #include "components/velocity.h"
+#include "components/luaBehavior.h"
 
 
 #include "util.h"
@@ -257,6 +258,36 @@ int Lua::AddComponent(lua_State *lua_state)
         bool solid = lua->PopBool(ic.Get()); 
 
         Scene::Get()->AddComponent<BoxCollider>(entity, Vector2{width, height}, Vector2{offsetX, offsetY}, solid);
+    }
+    else if (component == "luaBehaviour")
+    {
+        std::string path = lua->PopString(ic.Get());
+        
+        if (luaL_dofile(lua_state, path.c_str()) != LUA_OK) {
+            std::cout << "Error loading behaviur: " << lua_tostring(lua_state, -1) << "\n";
+            lua_pop(lua_state, 1);
+        } else {
+            lua_pushvalue(lua_state, -1); 
+            int luaTableRef = luaL_ref(lua_state, LUA_REGISTRYINDEX);
+            
+            lua_pushinteger(lua_state, (int)entity); //adding the entity id here, so the behavior knows who it is on
+            lua_setfield(lua_state, -2, "ID");
+            
+            lua_getfield(lua_state, -1, "OnCreate");
+            if (lua_isfunction(lua_state, -1)) {
+                lua_pushvalue(lua_state, -2); 
+                if (lua_pcall(lua_state, 1, 0, 0) != LUA_OK) {
+                    std::cout << "Error in OnCreate: " << lua_tostring(lua_state, -1) << "\n";
+                    lua_pop(lua_state, 1);
+                }
+            } else {
+                lua_pop(lua_state, 1);
+            }
+            
+            lua_pop(lua_state, 1); 
+            
+            Scene::Get()->AddComponent<Behaviour>(entity, path, luaTableRef);
+        }
     }
     else
         throw std::runtime_error(std::string("Dis is no component, here atleast") + std::string(component));
