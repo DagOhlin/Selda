@@ -3,7 +3,7 @@ print(":)")
 creatables = {
     ground = function(x, y) 
         local ent = CreateEntity()
-        AddComponent(ent, "Sprite", "textures/ground.png")
+        AddComponent(ent, "Sprite", "textures/Ground.png")
         AddComponent(ent, "Position", x, y)
         AddComponent(ent, "Box", x, y, 16, 16)
         -- AddComponent(ent, "TypeName", "Ground")
@@ -13,7 +13,7 @@ creatables = {
     
     wall = function(x, y)
         local ent = CreateEntity()
-        AddComponent(ent, "Sprite", "textures/wall.png")
+        AddComponent(ent, "Sprite", "textures/Wall.png")
         AddComponent(ent, "Position", x, y)
         AddComponent(ent, "Box", x, y, 16, 16)
         print(x * 16, y * 16)

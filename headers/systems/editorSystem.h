@@ -14,6 +14,7 @@
 #include "components/text.h"
 #include "components/typeName.h"
 #include "components/selector.h"
+#include "components/sprite.h"
 
 static TypeName current = TypeName{"Ground"};
 
@@ -39,6 +40,10 @@ struct EditorSystem
                     if (t.typeName != current.typeName)
                     {
                         t = current;
+                        Image image = LoadImage(("textures/" + t.typeName + ".png").c_str());
+                        Texture tex = LoadTextureFromImage(image);
+                        UnloadImage(image);
+                        registry.emplace_or_replace<Sprite>(entity, tex);
                     }
                     // Change stuff like sprite maybe
                 }

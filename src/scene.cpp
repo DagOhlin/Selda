@@ -4,6 +4,7 @@
 #include "systems/characterControlSystem.h"
 #include "systems/editorSystem.h"
 #include "components/typeName.h"
+#include "components/selector.h"
 #include <fstream>
 #include <algorithm>
 
@@ -57,15 +58,20 @@ int Scene::Save(lua_State *)
     float y = std::get<1>(*start).pos.y;
     for (auto o = start; start != entities.end(); start++)
     {
-        if (std::get<1>(*start).pos.y != y)
+        auto &pos = std::get<1>(*start).pos;
+        auto &typeName = std::get<3>(*start).typeName;
+        auto &ent = std::get<0>(*start);
+        if (reg.try_get<Selector>(ent))
+            return 0;
+        if (pos.y != y)
         {
-            y = std::get<1>(*start).pos.y;
+            y = pos.y;
             file << "\n";
-            file << std::get<3>(*start).typeName;
+            file << typeName;
         }
         else
         {
-            file << "|" << std::get<3>(*start).typeName;
+            file << "|" << typeName;
         }
     }
     return 0;

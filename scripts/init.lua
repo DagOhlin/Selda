@@ -13,7 +13,6 @@ if not success then
 end
 
 local success, loadscene = pcall(dofile, "scripts/loadScene.lua")
-print(success, loadscene)
 if not success then
     print("Error loading creations.lua: " .. creatables)
     return

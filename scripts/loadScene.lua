@@ -71,9 +71,11 @@ function LoadScene:LoadScene(editor)
         local ent = creatables.wall(0, y * 16)
         AddComponent(ent, "TypeName", "Wall")
         AddComponent(ent, "Selector")
-        ent = creatables.ground(0, y * 16)
+        ent = creatables.ground(16, y * 16)
         AddComponent(ent, "TypeName", "Ground")
         AddComponent(ent, "Selector")
+
+        local button = creatables.button(64, y * 16, Save, "Save")
 
     end
 end
