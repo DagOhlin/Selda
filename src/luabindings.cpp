@@ -283,8 +283,6 @@ int Lua::GetComponent(lua_State *lua_state)
     std::string component = lua->PopString(ic.Get());
     Scene *scene = Scene::Get();
 
-    std::cout << "Adding component " << component << " To entity " << (int)entity << "\n";
-
     if (component == "Position")
     {
         auto pos = scene->GetComponent<Position>(entity).pos;
@@ -385,8 +383,74 @@ int Lua::GetComponent(lua_State *lua_state)
     }
     else if (component == "Selector")
     {
-        throw std::runtime_error("No :)");
         // Scene::Get()->GetComponent<Selector>(entity)._;
+        throw std::runtime_error("No :)");
+        // lua_pushnil
+    }
+    else
+        throw std::runtime_error(std::string("Dis is no component, here atleast") + std::string(component));
+    return 0;
+}
+
+int Lua::RemoveComponent(lua_State *lua_state)
+{
+    auto ic = Incrementer(1);
+    Lua *lua = Lua::Get();
+    const entt::entity entity = (entt::entity)lua->PopInt(ic.Get());
+    std::string component = lua->PopString(ic.Get());
+    Scene *scene = Scene::Get();
+
+    if (component == "Position")
+    {
+        scene->RemoveComponent<Position>(entity);
+    }
+    else if (component == "Box")
+    {
+        scene->RemoveComponent<Box>(entity);
+    }
+    else if (component == "Colour")
+    {
+        scene->RemoveComponent<Colour>(entity);
+    }
+    else if (component == "Speed")
+    {
+        scene->RemoveComponent<Speed>(entity);
+    }
+    else if (component == "Clickable")
+    {
+        scene->RemoveComponent<Clickable>(entity);
+    }
+    else if (component == "Text")
+    {
+        scene->RemoveComponent<Text>(entity);
+    }
+    else if (component == "Sprite")
+    {
+        scene->RemoveComponent<Sprite>(entity);
+    }
+    else if (component == "Scale")
+    {
+        scene->RemoveComponent<Scale>(entity);
+    }
+    else if (component == "CharacterController")
+    {
+        scene->RemoveComponent<CharacterController>(entity);
+    }
+    else if (component == "Velocity")
+    {
+        scene->RemoveComponent<Velocity>(entity);
+    }
+    else if (component == "BoxCollider")
+    {
+        scene->RemoveComponent<BoxCollider>(entity);
+    }
+    else if (component == "TypeName")
+    {
+        scene->RemoveComponent<TypeName>(entity);
+    }
+    else if (component == "Selector")
+    {
+        scene->RemoveComponent<Selector>(entity);
     }
     else
         throw std::runtime_error(std::string("Dis is no component, here atleast") + std::string(component));

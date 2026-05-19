@@ -28,6 +28,8 @@ public:
     inline void AddComponent(entt::entity entity, Args &&...args);
     template <typename T>
     inline T GetComponent(entt::entity entity);
+    template <typename T>
+    inline void RemoveComponent(entt::entity entity);
     entt::registry &GetRegistry();
     static Scene *Get();
     static void Save();
@@ -53,4 +55,10 @@ template <typename T>
 T Scene::GetComponent(entt::entity entity)
 {
     return this->registry.get<T>(entity);
+}
+
+template <typename T>
+void Scene::RemoveComponent(entt::entity entity)
+{
+    this->registry.remove<T>(entity);
 }
