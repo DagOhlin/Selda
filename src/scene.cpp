@@ -7,6 +7,7 @@
 #include <fstream>
 #include <algorithm>
 #include "systems/collisionSystem.h"
+#include "systems/luaBehaviorSystem.h"
 
 entt::registry &Scene::GetRegistry()
 {
@@ -15,6 +16,7 @@ entt::registry &Scene::GetRegistry()
 
 void Scene::Update()
 {
+    BehaviourSystem::Update(this->GetRegistry());
     DrawSystem::Draw(this->GetRegistry());
     ButtonSystem::Draw(this->GetRegistry());
     CollisionSystem::Update(this->GetRegistry());

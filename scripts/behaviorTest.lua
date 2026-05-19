@@ -23,7 +23,6 @@ function monster:OnCreate()
 end
 
 
--- Called EVERY FRAME by the C++ BehaviourSystem
 function monster:OnUpdate(delta)
     if coroutine.status(self.co) ~= "dead" then --dead is a great thing to call it
         
