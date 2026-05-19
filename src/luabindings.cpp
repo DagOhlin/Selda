@@ -28,7 +28,7 @@ Lua::Lua() : lua_state(luaL_newstate())
     this->MakeFunc(Lua::AddComponent, "AddComponent");
     this->MakeFunc(Lua::ClearScene, "ClearScene");
     this->MakeFunc(Lua::Quit, "Quit");
-    this->MakeFunc(Scene::Save, "Save");
+    this->MakeFunc(Lua::Save, "Save");
     this->MakeFunc(Lua::GetComponent, "GetComponent");
 }
 
@@ -351,6 +351,32 @@ int Lua::GetComponent(lua_State *lua_state)
         lua->PushFloat(scale);
         return 1;
     }
+    else if (component == "CharacterController")
+    {
+        throw std::runtime_error("No :)");
+    }
+    else if (component == "Velocity")
+    {
+        auto velocity = scene->GetComponent<Velocity>(entity);
+        lua->PushFloat(velocity.maxVelocity);
+        lua->PushFloat(velocity.velocity.x);
+        lua->PushFloat(velocity.velocity.y);
+        return 3;
+    }
+    else if (component == "BoxCollider")
+    {
+        auto boxCol = scene->GetComponent<BoxCollider>(entity);
+
+        lua->PushFloat(boxCol.size.x);
+        lua->PushFloat(boxCol.size.y);
+
+        lua->PushFloat(boxCol.offset.x);
+        lua->PushFloat(boxCol.offset.y);
+
+        lua->PushBool(boxCol.solid);
+
+        return 5;
+    }
     else if (component == "TypeName")
     {
         auto typen = scene->GetComponent<TypeName>(entity).typeName;
@@ -370,6 +396,12 @@ int Lua::GetComponent(lua_State *lua_state)
 int Lua::ClearScene(lua_State *lua_state)
 {
     Scene::Get()->Clear();
+    return 0;
+}
+
+int Lua::Save(lua_State *lua_state)
+{
+    Scene::Get()->Save();
     return 0;
 }
 

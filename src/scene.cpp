@@ -35,7 +35,7 @@ Scene *Scene::Get()
     return self.get();
 }
 
-int Scene::Save(lua_State *)
+void Scene::Save()
 {
     auto scene = Scene::Get();
     auto &reg = scene->GetRegistry();
@@ -54,7 +54,7 @@ int Scene::Save(lua_State *)
 
     auto start = entities.begin();
     if (start == entities.end())
-        return 0;
+        return;
     file << std::get<3>(*start).typeName;
     start++;
     float y = std::get<1>(*start).pos.y;
@@ -64,7 +64,7 @@ int Scene::Save(lua_State *)
         auto &typeName = std::get<3>(*start).typeName;
         auto &ent = std::get<0>(*start);
         if (reg.try_get<Selector>(ent))
-            return 0;
+            return;
         if (pos.y != y)
         {
             y = pos.y;
@@ -76,7 +76,6 @@ int Scene::Save(lua_State *)
             file << "|" << typeName;
         }
     }
-    return 0;
 }
 
 // Scene functions

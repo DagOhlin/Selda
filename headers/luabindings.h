@@ -34,6 +34,7 @@ public:
     static int AddComponent(lua_State *lua_state);
     static int GetComponent(lua_State *lua_state);
     static int ClearScene(lua_State *lua_state);
+    static int Save(lua_State *lua_state);
     static int Quit(lua_State *lua_state);
 
     // Singleton

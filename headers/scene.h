@@ -30,7 +30,7 @@ public:
     inline T GetComponent(entt::entity entity);
     entt::registry &GetRegistry();
     static Scene *Get();
-    static int Save(lua_State *);
+    static void Save();
 
 private:
     entt::registry registry;
