@@ -52,5 +52,5 @@ void Scene::AddComponent(entt::entity entity, Args &&...args)
 template <typename T>
 T Scene::GetComponent(entt::entity entity)
 {
-    return this->registry.Get<T>(entity);
+    return this->registry.get<T>(entity);
 }
