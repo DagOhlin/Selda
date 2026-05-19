@@ -1,6 +1,8 @@
 -- Included functions: 
 -- int CreateEntity()
--- AddComponent(entity, string Component, args...)
+-- void AddComponent(int entity, string Component, T args...)
+-- void ClearScene()
+-- void Quit()
 
 
 print("hello")
@@ -10,28 +12,22 @@ if not success then
     return
 end
 
-print("Calling Init function")
-
-
-function SuperDuperFunc()  
-    print("Hello there")
+local success, loadscene = pcall(dofile, "scripts/loadScene.lua")
+print(success, loadscene)
+if not success then
+    print("Error loading creations.lua: " .. creatables)
+    return
 end
 
-creatables.button(100, 100, SuperDuperFunc)
-creatables.button(400, 100, SuperDuperFunc)
+function g() 
+    ClearScene()
+    loadscene:LoadScene()
+end
 
-player = CreateEntity();
+function f()
+    Quit()
+end
 
-AddComponent(player, "Position", 100.0, 100.0);
-AddComponent(player, "Sprite", "textures/Blink2.png"); 
-AddComponent(player, "Scale", 8.0);
-AddComponent(player, "CharacterController", 100.0);
-AddComponent(player, "Velocity", 50.0, 0.0, 0.0);
-AddComponent(player, "BoxCollider", 6 * 8, 16 * 8, (16 * 8 - 6 * 8) / 2, 0, true);
 
-obstacle = CreateEntity();
-
-AddComponent(obstacle, "Position", 300.0, 300.0);
-AddComponent(obstacle, "BoxCollider", 16 * 8, 16 * 8, 0, 0, true);
-AddComponent(obstacle, "Sprite", "textures/wall.png"); 
-AddComponent(obstacle, "Scale", 8.0);
+button = creatables.button(100, 100, g, "Play")
+button = creatables.button(100, 200, Quit, "Quit")

@@ -1,13 +1,20 @@
 print(":)")
 
 creatables = {
-    ground = function() 
-
+    ground = function(x, y) 
+        local ent = CreateEntity()
+        AddComponent(ent, "Sprite", "textures/ground.png")
+        AddComponent(ent, "Position", x, y)
+        return ent
     end,
 
 
-    wall = function()
+    wall = function(x, y)
+        local ent = CreateEntity()
+        AddComponent(ent, "Sprite", "textures/wall.png")
+        AddComponent(ent, "Position", x, y)
 
+        return ent
     end,
 
     enemy = function()
@@ -15,15 +22,14 @@ creatables = {
     end,
 
     player = function()
-
+        local ent = CreateEntity()
+        AddComponent(ent, "Sprite", "textures/Blink2.png")
+        AddComponent(ent, "Position", x, y)
+        return ent
     end,
 
     button = function(x, y, func, text, width, height, color, scale)
         button = CreateEntity()
-
-        local function func()
-            print("Hello there")
-        end
 
         text = text or ""
         width = width or 100
@@ -32,7 +38,7 @@ creatables = {
         scale = scale or 1
 
         AddComponent(button, "Box", x, y, 200, 100)
-        AddComponent(button, "Colour", 0, 0, 255, 255)
+        AddComponent(button, "Colour", 40, 40, 40, 255)
         AddComponent(button, "Text", text, 0, 0, 60, color.r, color.g, color.b, color.a)
         AddComponent(button, "Scale", scale)
         AddComponent(button, "Clickable", func)

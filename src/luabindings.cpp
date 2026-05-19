@@ -1,4 +1,5 @@
 #include <iostream>
+#include <raylib.h>
 
 #include "luabindings.h"
 #include "scene.h"
@@ -23,6 +24,8 @@ Lua::Lua() : lua_state(luaL_newstate())
     luaL_openlibs(this->lua_state);
     this->MakeFunc(Lua::CreateEntity, "CreateEntity");
     this->MakeFunc(Lua::AddComponent, "AddComponent");
+    this->MakeFunc(Lua::ClearScene, "ClearScene");
+    this->MakeFunc(Lua::Quit, "Quit");
 }
 
 Lua::~Lua()
@@ -207,6 +210,7 @@ int Lua::AddComponent(lua_State *lua_state)
     else if (component == "Sprite")
     {
         auto path = lua->PopString(ic.Get());
+
         Image image = LoadImage(path.c_str());
         Texture tex = LoadTextureFromImage(image);
         UnloadImage(image);
@@ -249,6 +253,18 @@ int Lua::AddComponent(lua_State *lua_state)
 
     lua_settop(lua->GetState(), 0);
 
+    return 0;
+}
+
+int Lua::ClearScene(lua_State *lua_state)
+{
+    Scene::Get()->Clear();
+    return 0;
+}
+
+int Lua::Quit(lua_State *lua_state)
+{
+    CloseWindow();
     return 0;
 }
 

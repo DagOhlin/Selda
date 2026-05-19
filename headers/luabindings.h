@@ -31,6 +31,8 @@ public:
     // Lua functions
     static int CreateEntity(lua_State *lua_state);
     static int AddComponent(lua_State *lua_state);
+    static int ClearScene(lua_State *lua_state);
+    static int Quit(lua_State *lua_state);
 
     // Singleton
     static Lua *Get();
