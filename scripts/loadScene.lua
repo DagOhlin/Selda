@@ -38,7 +38,6 @@ function LoadScene:CreateEntities(x, y, block)
 end
 
 function LoadScene:CreateEditorEntities(x, y, block)
-    
     for _, object in ipairs(split(block, ":")) do
         local entity = nil
         if (object == "Wall") then
@@ -51,7 +50,6 @@ function LoadScene:CreateEditorEntities(x, y, block)
             entity = creatables.player()
         end
         
-
         AddComponent(entity, "TypeName", object)
     end
 end
@@ -67,6 +65,16 @@ function LoadScene:LoadScene(editor)
             end
         end
         y = y + 1
+    end
+    
+    if editor then
+        local ent = creatables.wall(0, y * 16)
+        AddComponent(ent, "TypeName", "Wall")
+        AddComponent(ent, "Selector")
+        ent = creatables.ground(0, y * 16)
+        AddComponent(ent, "TypeName", "Ground")
+        AddComponent(ent, "Selector")
+
     end
 end
 

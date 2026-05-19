@@ -31,6 +31,4 @@ end
 
 
 button1 = creatables.button(100, 100, Play, "Play")
-button2 = creatables.button(100, 200, Play, "Editor")
-button3 = creatables.button(100, 300, Quit, "Quit")
-button4 = creatables.button(100, 400, Editor, "Play")
+button2 = creatables.button(100, 200, Editor, "Editor")

@@ -14,6 +14,7 @@
 #include "components/sprite.h"
 #include "components/scale.h"
 #include "components/typeName.h"
+#include "components/selector.h"
 
 #include "util.h"
 
@@ -220,6 +221,10 @@ int Lua::AddComponent(lua_State *lua_state)
     {
         std::string name = lua->PopString(ic.Get());
         Scene::Get()->AddComponent<TypeName>(entity, name);
+    }
+    else if (component == "Selector")
+    {
+        Scene::Get()->AddComponent<Selector>(entity);
     }
     else
         throw std::runtime_error(std::string("Dis is no component, here atleast") + std::string(component));

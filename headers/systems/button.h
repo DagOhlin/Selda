@@ -27,6 +27,7 @@ struct ButtonSystem
                 Lua::Get()->GetGlobal(clickable.luaFuncName.data());
                 Lua::Get()->PushInt((int)entity);
                 lua_call(Lua::Get()->GetState(), 1, 0, 0);
+                return;
             }
 
             DrawRectangle(box.rectangle.x, box.rectangle.y, box.rectangle.width, box.rectangle.height, colour.color);

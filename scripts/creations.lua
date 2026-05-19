@@ -5,15 +5,18 @@ creatables = {
         local ent = CreateEntity()
         AddComponent(ent, "Sprite", "textures/ground.png")
         AddComponent(ent, "Position", x, y)
+        AddComponent(ent, "Box", x, y, 16, 16)
         -- AddComponent(ent, "TypeName", "Ground")
         return ent
     end,
-
-
+    
+    
     wall = function(x, y)
         local ent = CreateEntity()
         AddComponent(ent, "Sprite", "textures/wall.png")
         AddComponent(ent, "Position", x, y)
+        AddComponent(ent, "Box", x, y, 16, 16)
+        print(x * 16, y * 16)
         -- AddComponent(ent, "TypeName", "Wall")
 
         return ent

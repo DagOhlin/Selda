@@ -2,6 +2,7 @@
 #include "systems/drawable.h"
 #include "systems/button.h"
 #include "systems/characterControlSystem.h"
+#include "systems/editorSystem.h"
 #include "components/typeName.h"
 #include <fstream>
 #include <algorithm>
@@ -16,6 +17,7 @@ void Scene::Update()
     DrawSystem::Draw(this->GetRegistry());
     ButtonSystem::Draw(this->GetRegistry());
     CharacterControlSystem::MoveBasedOnInput(this->GetRegistry());
+    EditorSystem::Click(this->GetRegistry());
 }
 
 void Scene::Clear()
