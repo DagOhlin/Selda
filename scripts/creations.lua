@@ -5,38 +5,46 @@ creatables = {
         local ent = CreateEntity()
         AddComponent(ent, "Sprite", "textures/ground.png")
         AddComponent(ent, "Position", x, y)
+        AddComponent(ent, "Box", x, y, 16, 16)
+        -- AddComponent(ent, "TypeName", "Ground")
         return ent
     end,
-
-
+    
+    
     wall = function(x, y)
         local ent = CreateEntity()
         AddComponent(ent, "Sprite", "textures/wall.png")
         AddComponent(ent, "Position", x, y)
+        AddComponent(ent, "Box", x, y, 16, 16)
+        print(x * 16, y * 16)
+        -- AddComponent(ent, "TypeName", "Wall")
 
         return ent
     end,
 
     enemy = function()
         
+        -- AddComponent(ent, "TypeName", "Enemy")
     end,
 
     player = function()
         local ent = CreateEntity()
         AddComponent(ent, "Sprite", "textures/Blink2.png")
         AddComponent(ent, "Position", x, y)
+        -- AddComponent(ent, "TypeName", "Player")
         return ent
     end,
 
     button = function(x, y, func, text, width, height, color, scale)
-        button = CreateEntity()
+        local button = CreateEntity()
 
-        text = text or ""
-        width = width or 100
-        height = height or 50
-        color = color or {r = 0, g = 0, b = 255, a = 255}
-        scale = scale or 1
+        local text = text or ""
+        local width = width or 100
+        local height = height or 50
+        local color = color or {r = 0, g = 0, b = 255, a = 255}
+        local scale = scale or 1
 
+        -- AddComponent(button, "TypeName", "Button")
         AddComponent(button, "Box", x, y, 200, 100)
         AddComponent(button, "Colour", 40, 40, 40, 255)
         AddComponent(button, "Text", text, 0, 0, 60, color.r, color.g, color.b, color.a)

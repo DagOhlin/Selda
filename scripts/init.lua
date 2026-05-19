@@ -19,15 +19,16 @@ if not success then
     return
 end
 
-function g() 
+function Play(entity) 
     ClearScene()
-    loadscene:LoadScene()
+    loadscene:LoadScene(false)
 end
 
-function f()
-    Quit()
+function Editor(entity)
+    ClearScene()
+    loadscene:LoadScene(true)
 end
 
 
-button = creatables.button(100, 100, g, "Play")
-button = creatables.button(100, 200, Quit, "Quit")
+button1 = creatables.button(100, 100, Play, "Play")
+button2 = creatables.button(100, 200, Editor, "Editor")
