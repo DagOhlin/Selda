@@ -22,11 +22,13 @@ struct EditorSystem
 {
     inline static void Click(entt::registry &registry)
     {
+        if (!IsMouseButtonPressed(0))
+            return;
         auto view = registry.view<Box, TypeName>();
 
         for (auto [entity, box, t] : view.each())
         {
-            if (CheckCollisionPointRec(GetMousePosition(), box.rectangle) && IsMouseButtonPressed(0))
+            if (CheckCollisionPointRec(GetMousePosition(), box.rectangle))
             {
                 // Clicked box is a placement selector
                 if (registry.try_get<Selector>(entity))

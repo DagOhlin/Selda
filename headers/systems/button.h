@@ -21,7 +21,7 @@ struct ButtonSystem
 
         for (auto [entity, box, clickable, colour] : view.each())
         {
-            if (CheckCollisionPointRec(GetMousePosition(), box.rectangle) && IsMouseButtonPressed(0))
+            if (IsMouseButtonPressed(0) && CheckCollisionPointRec(GetMousePosition(), box.rectangle))
             {
                 /* code */
                 Lua::Get()->GetGlobal(clickable.luaFuncName.data());
