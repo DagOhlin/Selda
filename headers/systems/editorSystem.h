@@ -26,9 +26,11 @@ struct EditorSystem
             return;
         auto view = registry.view<Box, TypeName>();
 
+        auto mousepos = ScreenSpaceToWorld(GetMousePosition(), false);
+
         for (auto [entity, box, t] : view.each())
         {
-            if (CheckCollisionPointRec(GetMousePosition(), box.rectangle))
+            if (CheckCollisionPointRec(mousepos, box.rectangle))
             {
                 // Clicked box is a placement selector
                 if (registry.try_get<Selector>(entity))

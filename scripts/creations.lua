@@ -27,10 +27,13 @@ creatables = {
         -- AddComponent(ent, "TypeName", "Enemy")
     end,
 
-    player = function()
+    player = function(x, y)
         local ent = CreateEntity()
         AddComponent(ent, "Sprite", "textures/Blink2.png")
         AddComponent(ent, "Position", x, y)
+        AddComponent(ent, "BoxCollider", 10, 10, 10, 10, 10)
+        AddComponent(ent, "Velocity", 50 , 0, 0)
+        AddComponent(ent, "CharacterController", 50)
         -- AddComponent(ent, "TypeName", "Player")
         return ent
     end,

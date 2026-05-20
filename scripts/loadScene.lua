@@ -25,15 +25,21 @@ LoadScene = {}
 
 function LoadScene:CreateEntities(x, y, block)
     for _, object in ipairs(split(block, ":")) do
+        local scale = 4
+        local x, y = x * scale, y * scale
+
         if (object == "Wall") then
-            creatables.wall(x, y)
+            entity = creatables.wall(x, y)
         elseif (object == "Ground") then
-            creatables.ground(x, y)
+            entity = creatables.ground(x, y)
         elseif (object == "Enemy") then
-            creatables.enemy(x, y)
+            entity = creatables.enemy(x, y)
         elseif (object == "Player") then
-            creatables.player()
+            entity = creatables.player()
         end
+
+        AddComponent(entity, "Scale", scale)
+
     end
 end
 
@@ -47,7 +53,7 @@ function LoadScene:CreateEditorEntities(x, y, block)
         elseif (object == "Enemy") then
             entity = creatables.enemy(x, y)
         elseif (object == "Player") then
-            entity = creatables.player()
+            entity = creatables.player(x, y)
         end
         
         AddComponent(entity, "TypeName", object)

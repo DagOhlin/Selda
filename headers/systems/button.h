@@ -12,6 +12,7 @@
 #include "components/colour.h"
 #include "components/clickable.h"
 #include "components/text.h"
+#include "systems/characterControlSystem.h"
 
 struct ButtonSystem
 {
