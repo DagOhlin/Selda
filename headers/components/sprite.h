@@ -1,9 +1,9 @@
-#pragma once 
+#pragma once
 
 #include <raylib.h>
 
 struct Sprite
 {
-    /* data */
     Texture2D texture;
+    int layer = 0;
 };

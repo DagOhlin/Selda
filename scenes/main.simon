@@ -5,7 +5,7 @@ Wall|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Groun
 Wall|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Wall
 Wall|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Wall
 Wall|Ground|Ground|Ground|Ground|Ground|Ground|Ground:Player|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Wall
-Wall|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Wall
+Wall|Ground|Ground|Ground|Ground|Ground|Ground|Ground:Enemy|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Wall
 Wall|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Wall
 Wall|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Wall
 Wall|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Wall

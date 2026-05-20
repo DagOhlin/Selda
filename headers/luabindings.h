@@ -31,6 +31,7 @@ public:
 
     // Lua functions
     static int CreateEntity(lua_State *lua_state);
+    static int RemoveEntity(lua_State *lua_state);
     static int AddComponent(lua_State *lua_state);
     static int GetComponent(lua_State *lua_state);
     static int RemoveComponent(lua_State *lua_state);

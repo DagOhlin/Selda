@@ -30,6 +30,7 @@ Lua::Lua() : lua_state(luaL_newstate())
     this->MakeFunc(Lua::Quit, "Quit");
     this->MakeFunc(Lua::Save, "Save");
     this->MakeFunc(Lua::GetComponent, "GetComponent");
+    this->MakeFunc(Lua::RemoveEntity, "RemoveEntity");
 }
 
 Lua::~Lua()
@@ -153,6 +154,13 @@ int Lua::CreateEntity(lua_State *lua_state)
     return 1;
 }
 
+int Lua::RemoveEntity(lua_State *lua_state)
+{
+    entt::entity entity = (entt::entity)lua_tointeger(lua_state, 1);
+    Scene::Get()->RemoveEntity(entity);
+    return 0;
+}
+
 int Lua::AddComponent(lua_State *lua_state)
 {
     auto ic = Incrementer(1);
@@ -219,12 +227,13 @@ int Lua::AddComponent(lua_State *lua_state)
     else if (component == "Sprite")
     {
         auto path = lua->PopString(ic.Get());
+        int layer = lua->PopInt(ic.Get());
 
         Image image = LoadImage(path.c_str());
         Texture tex = LoadTextureFromImage(image);
         UnloadImage(image);
 
-        Scene::Get()->AddComponent<Sprite>(entity, tex);
+        Scene::Get()->AddComponent<Sprite>(entity, tex, layer);
     }
     else if (component == "Scale")
     {

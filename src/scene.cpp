@@ -88,6 +88,11 @@ ObjectBuilder Scene::CreateEntity()
     return ObjectBuilder(this->registry);
 }
 
+void Scene::RemoveEntity(entt::entity entity)
+{
+    this->registry.destroy(entity);
+}
+
 entt::entity ObjectBuilder::Build()
 {
     return this->entity;

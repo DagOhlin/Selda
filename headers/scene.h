@@ -21,6 +21,7 @@ class Scene
 {
 public:
     ObjectBuilder CreateEntity();
+    void RemoveEntity(entt::entity entity);
     void Update();
     void Clear();
 

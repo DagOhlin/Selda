@@ -3,7 +3,7 @@ print(":)")
 creatables = {
     ground = function(x, y) 
         local ent = CreateEntity()
-        AddComponent(ent, "Sprite", "textures/Ground.png")
+        AddComponent(ent, "Sprite", "textures/Ground.png", 0)
         AddComponent(ent, "Position", x, y)
         AddComponent(ent, "Box", x, y, 16, 16)
         -- AddComponent(ent, "TypeName", "Ground")
@@ -13,24 +13,28 @@ creatables = {
     
     wall = function(x, y)
         local ent = CreateEntity()
-        AddComponent(ent, "Sprite", "textures/Wall.png")
+        AddComponent(ent, "Sprite", "textures/Wall.png", 0)
         AddComponent(ent, "Position", x, y)
         AddComponent(ent, "Box", x, y, 16, 16)
         AddComponent(ent, "BoxCollider", 16, 16, 0, 0, true);
-        print(x * 16, y * 16)
         -- AddComponent(ent, "TypeName", "Wall")
+        
+        return ent
+    end,
+    
+    enemy = function(x, y)
+        local ent = CreateEntity()
+        AddComponent(ent, "BoxCollider", 16, 16, 0, 0, true);
+        AddComponent(ent, "Sprite", "textures/Blink2.png", 1)
+        AddComponent(ent, "Position", x, y)
+        AddComponent(ent, "luaBehaviour", "./scripts/enemy.lua")
 
         return ent
     end,
 
-    enemy = function()
-        
-        -- AddComponent(ent, "TypeName", "Enemy")
-    end,
-
     player = function(x, y)
         local ent = CreateEntity()
-        AddComponent(ent, "Sprite", "textures/Blink2.png")
+        AddComponent(ent, "Sprite", "textures/Blink2.png", 1)
         AddComponent(ent, "Position", x, y)
         AddComponent(ent, "CharacterController", 100.0);
         AddComponent(ent, "Velocity", 50.0, 0.0, 0.0);
