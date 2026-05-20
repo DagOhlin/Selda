@@ -2,19 +2,17 @@
 #include "systems/drawable.h"
 #include "systems/button.h"
 #include "systems/characterControlSystem.h"
-<<<<<<<<<Temporary merge branch 1
+
 #include "systems/collisionSystem.h"
-             == == == ==
-         =
+#include "systems/luaBehaviorSystem.h"
 #include "systems/editorSystem.h"
 #include "components/typeName.h"
 #include "components/selector.h"
 #include <fstream>
 #include <algorithm>
-             >>>>>>>>> Temporary merge branch 2
 
-    entt::registry &
-    Scene::GetRegistry()
+entt::registry &
+Scene::GetRegistry()
 {
     return this->registry;
 }
