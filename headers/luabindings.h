@@ -13,6 +13,7 @@ public:
 
     void PushBool(bool b);
     void PushInt(int i);
+    void PushFloat(float i);
     void PushFunc(int (*f)(lua_State *));
     void PushString(std::string s);
 
@@ -31,7 +32,10 @@ public:
     // Lua functions
     static int CreateEntity(lua_State *lua_state);
     static int AddComponent(lua_State *lua_state);
+    static int GetComponent(lua_State *lua_state);
+    static int RemoveComponent(lua_State *lua_state);
     static int ClearScene(lua_State *lua_state);
+    static int Save(lua_State *lua_state);
     static int Quit(lua_State *lua_state);
 
     // Singleton

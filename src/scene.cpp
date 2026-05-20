@@ -2,14 +2,19 @@
 #include "systems/drawable.h"
 #include "systems/button.h"
 #include "systems/characterControlSystem.h"
+<<<<<<<<<Temporary merge branch 1
+#include "systems/collisionSystem.h"
+             == == == ==
+         =
 #include "systems/editorSystem.h"
 #include "components/typeName.h"
+#include "components/selector.h"
 #include <fstream>
 #include <algorithm>
-#include "systems/collisionSystem.h"
-#include "systems/luaBehaviorSystem.h"
+             >>>>>>>>> Temporary merge branch 2
 
-entt::registry &Scene::GetRegistry()
+    entt::registry &
+    Scene::GetRegistry()
 {
     return this->registry;
 }
@@ -36,7 +41,7 @@ Scene *Scene::Get()
     return self.get();
 }
 
-int Scene::Save(lua_State *)
+void Scene::Save()
 {
     auto scene = Scene::Get();
     auto &reg = scene->GetRegistry();
@@ -55,24 +60,28 @@ int Scene::Save(lua_State *)
 
     auto start = entities.begin();
     if (start == entities.end())
-        return 0;
+        return;
     file << std::get<3>(*start).typeName;
     start++;
     float y = std::get<1>(*start).pos.y;
     for (auto o = start; start != entities.end(); start++)
     {
-        if (std::get<1>(*start).pos.y != y)
+        auto &pos = std::get<1>(*start).pos;
+        auto &typeName = std::get<3>(*start).typeName;
+        auto &ent = std::get<0>(*start);
+        if (reg.try_get<Selector>(ent))
+            return;
+        if (pos.y != y)
         {
-            y = std::get<1>(*start).pos.y;
+            y = pos.y;
             file << "\n";
-            file << std::get<3>(*start).typeName;
+            file << typeName;
         }
         else
         {
-            file << "|" << std::get<3>(*start).typeName;
+            file << "|" << typeName;
         }
     }
-    return 0;
 }
 
 // Scene functions

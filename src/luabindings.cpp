@@ -13,23 +13,28 @@
 #include "components/text.h"
 #include "components/sprite.h"
 #include "components/scale.h"
-#include "components/typeName.h"
-#include "components/selector.h"
+<<<<<<<<<Temporary merge branch 1
 #include "components/boxCollider.h"
 #include "components/velocity.h"
 #include "components/luaBehavior.h"
 
+             == == == ==
+         =
+#include "components/typeName.h"
+#include "components/selector.h"
+             >>>>>>>>> Temporary merge branch 2
 
 #include "util.h"
 
-Lua::Lua() : lua_state(luaL_newstate())
+    Lua::Lua() : lua_state(luaL_newstate())
 {
     luaL_openlibs(this->lua_state);
     this->MakeFunc(Lua::CreateEntity, "CreateEntity");
     this->MakeFunc(Lua::AddComponent, "AddComponent");
     this->MakeFunc(Lua::ClearScene, "ClearScene");
     this->MakeFunc(Lua::Quit, "Quit");
-    this->MakeFunc(Scene::Save, "Save");
+    this->MakeFunc(Lua::Save, "Save");
+    this->MakeFunc(Lua::GetComponent, "GetComponent");
 }
 
 Lua::~Lua()
@@ -46,6 +51,11 @@ void Lua::PushBool(bool b)
 void Lua::PushInt(int i)
 {
     lua_pushinteger(this->lua_state, i);
+}
+
+void Lua::PushFloat(float i)
+{
+    lua_pushnumber(this->lua_state, i);
 }
 
 void Lua::PushFunc(int (*f)(lua_State *))
@@ -227,16 +237,7 @@ int Lua::AddComponent(lua_State *lua_state)
         std::cout << scale << "\n";
         Scene::Get()->AddComponent<Scale>(entity, scale);
     }
-    else if (component == "TypeName")
-    {
-        std::string name = lua->PopString(ic.Get());
-        Scene::Get()->AddComponent<TypeName>(entity, name);
-    }
-    else if (component == "Selector")
-    {
-        Scene::Get()->AddComponent<Selector>(entity);
-    }
-    else if (component == "CharacterController")
+    < < < < < < < < < Temporary merge branch 1 else if (component == "CharacterController")
     {
         float speed = lua->PopFloat(ic.Get());
         Scene::Get()->AddComponent<CharacterController>(entity, speed);
@@ -255,69 +256,237 @@ int Lua::AddComponent(lua_State *lua_state)
         float height = lua->PopFloat(ic.Get());
         float offsetX = lua->PopFloat(ic.Get());
         float offsetY = lua->PopFloat(ic.Get());
-        bool solid = lua->PopBool(ic.Get()); 
+        bool solid = lua->PopBool(ic.Get());
 
         Scene::Get()->AddComponent<BoxCollider>(entity, Vector2{width, height}, Vector2{offsetX, offsetY}, solid);
-    }
-    else if (component == "luaBehaviour")
-    {
-        std::string path = lua->PopString(ic.Get());
-        
-        if (luaL_dofile(lua_state, path.c_str()) != LUA_OK) {
-            std::cout << "Error loading behaviur: " << lua_tostring(lua_state, -1) << "\n";
-            lua_pop(lua_state, 1);
-        } else {
-            lua_pushvalue(lua_state, -1); 
-            int luaTableRef = luaL_ref(lua_state, LUA_REGISTRYINDEX);
-            
-            lua_pushinteger(lua_state, (int)entity); //adding the entity id here, so the behavior knows who it is on
-            lua_setfield(lua_state, -2, "ID");
-            
-            lua_getfield(lua_state, -1, "OnCreate");
-            if (lua_isfunction(lua_state, -1)) {
-                lua_pushvalue(lua_state, -2); 
-                if (lua_pcall(lua_state, 1, 0, 0) != LUA_OK) {
-                    std::cout << "Error in OnCreate: " << lua_tostring(lua_state, -1) << "\n";
-                    lua_pop(lua_state, 1);
-                }
-            } else {
-                lua_pop(lua_state, 1);
-            }
-            
-            lua_pop(lua_state, 1); 
-            
-            Scene::Get()->AddComponent<Behaviour>(entity, path, luaTableRef);
+        == == == == =
+                        else if (component == "TypeName")
+        {
+            std::string name = lua->PopString(ic.Get());
+            Scene::Get()->AddComponent<TypeName>(entity, name);
         }
+        else if (component == "Selector")
+        {
+            Scene::Get()->AddComponent<Selector>(entity);
+            >>>>>>>>> Temporary merge branch 2
+        }
+        else throw std::runtime_error(std::string("Dis is no component, here atleast") + std::string(component));
+
+        auto func = lua_tocfunction(lua_state, -1);
+
+        lua_settop(lua->GetState(), 0);
+
+        return 0;
     }
-    else
-        throw std::runtime_error(std::string("Dis is no component, here atleast") + std::string(component));
 
-    auto func = lua_tocfunction(lua_state, -1);
+    int Lua::GetComponent(lua_State * lua_state)
+    {
 
-    lua_settop(lua->GetState(), 0);
+        auto ic = Incrementer(1);
+        Lua *lua = Lua::Get();
+        const entt::entity entity = (entt::entity)lua->PopInt(ic.Get());
+        std::string component = lua->PopString(ic.Get());
+        Scene *scene = Scene::Get();
 
-    return 0;
-}
+        if (component == "Position")
+        {
+            auto pos = scene->GetComponent<Position>(entity).pos;
+            lua->PushFloat(pos.x);
+            lua->PushFloat(pos.y);
+            return 2;
+        }
+        else if (component == "Box")
+        {
+            auto box = scene->GetComponent<Box>(entity).rectangle;
+            lua->PushFloat(box.x);
+            lua->PushFloat(box.y);
+            lua->PushFloat(box.width);
+            lua->PushFloat(box.height);
+            return 4;
+        }
+        else if (component == "Colour")
+        {
+            auto colour = scene->GetComponent<Colour>(entity).color;
+            lua->PushInt(colour.r);
+            lua->PushInt(colour.g);
+            lua->PushInt(colour.b);
+            lua->PushInt(colour.a);
+            return 4;
+        }
+        else if (component == "Speed")
+        {
+            auto speed = scene->GetComponent<Speed>(entity).speed;
+            lua->PushFloat(speed.x);
+            lua->PushFloat(speed.y);
+            return 2;
+        }
+        else if (component == "Clickable")
+        {
+            auto funcName = scene->GetComponent<Clickable>(entity).luaFuncName;
+            lua->PushString(funcName);
+            return 1;
+        }
+        else if (component == "Text")
+        {
+            auto text = scene->GetComponent<Text>(entity);
 
-int Lua::ClearScene(lua_State *lua_state)
-{
-    Scene::Get()->Clear();
-    return 0;
-}
+            lua->PushInt(text.color.r);
+            lua->PushInt(text.color.g);
+            lua->PushInt(text.color.b);
+            lua->PushInt(text.color.a);
 
-int Lua::Quit(lua_State *lua_state)
-{
-    CloseWindow();
-    return 0;
-}
+            lua->PushString(text.text);
 
-Lua *Lua::Get()
-{
-    static std::unique_ptr<Lua> lua = std::make_unique<Lua>();
-    return lua.get();
-}
+            lua->PushFloat(text.pos.x);
+            lua->PushFloat(text.pos.y);
 
-lua_State *Lua::GetState()
-{
-    return this->lua_state;
-}
+            lua->PushFloat(text.fontSize);
+
+            return 8;
+        }
+        else if (component == "Sprite")
+        {
+            throw std::runtime_error("No :)");
+        }
+        else if (component == "Scale")
+        {
+            auto scale = scene->GetComponent<Scale>(entity).scale;
+            lua->PushFloat(scale);
+            return 1;
+        }
+        else if (component == "CharacterController")
+        {
+            throw std::runtime_error("No :)");
+        }
+        else if (component == "Velocity")
+        {
+            auto velocity = scene->GetComponent<Velocity>(entity);
+            lua->PushFloat(velocity.maxVelocity);
+            lua->PushFloat(velocity.velocity.x);
+            lua->PushFloat(velocity.velocity.y);
+            return 3;
+        }
+        else if (component == "BoxCollider")
+        {
+            auto boxCol = scene->GetComponent<BoxCollider>(entity);
+
+            lua->PushFloat(boxCol.size.x);
+            lua->PushFloat(boxCol.size.y);
+
+            lua->PushFloat(boxCol.offset.x);
+            lua->PushFloat(boxCol.offset.y);
+
+            lua->PushBool(boxCol.solid);
+
+            return 5;
+        }
+        else if (component == "TypeName")
+        {
+            auto typen = scene->GetComponent<TypeName>(entity).typeName;
+            lua->PushString(typen);
+            return 1;
+        }
+        else if (component == "Selector")
+        {
+            // Scene::Get()->GetComponent<Selector>(entity)._;
+            throw std::runtime_error("No :)");
+            // lua_pushnil
+        }
+        else
+            throw std::runtime_error(std::string("Dis is no component, here atleast") + std::string(component));
+        return 0;
+    }
+
+    int Lua::RemoveComponent(lua_State * lua_state)
+    {
+        auto ic = Incrementer(1);
+        Lua *lua = Lua::Get();
+        const entt::entity entity = (entt::entity)lua->PopInt(ic.Get());
+        std::string component = lua->PopString(ic.Get());
+        Scene *scene = Scene::Get();
+
+        if (component == "Position")
+        {
+            scene->RemoveComponent<Position>(entity);
+        }
+        else if (component == "Box")
+        {
+            scene->RemoveComponent<Box>(entity);
+        }
+        else if (component == "Colour")
+        {
+            scene->RemoveComponent<Colour>(entity);
+        }
+        else if (component == "Speed")
+        {
+            scene->RemoveComponent<Speed>(entity);
+        }
+        else if (component == "Clickable")
+        {
+            scene->RemoveComponent<Clickable>(entity);
+        }
+        else if (component == "Text")
+        {
+            scene->RemoveComponent<Text>(entity);
+        }
+        else if (component == "Sprite")
+        {
+            scene->RemoveComponent<Sprite>(entity);
+        }
+        else if (component == "Scale")
+        {
+            scene->RemoveComponent<Scale>(entity);
+        }
+        else if (component == "CharacterController")
+        {
+            scene->RemoveComponent<CharacterController>(entity);
+        }
+        else if (component == "Velocity")
+        {
+            scene->RemoveComponent<Velocity>(entity);
+        }
+        else if (component == "BoxCollider")
+        {
+            scene->RemoveComponent<BoxCollider>(entity);
+        }
+        else if (component == "TypeName")
+        {
+            scene->RemoveComponent<TypeName>(entity);
+        }
+        else if (component == "Selector")
+        {
+            scene->RemoveComponent<Selector>(entity);
+        }
+        else
+            throw std::runtime_error(std::string("Dis is no component, here atleast") + std::string(component));
+        return 0;
+    }
+
+    int Lua::ClearScene(lua_State * lua_state)
+    {
+        Scene::Get()->Clear();
+        return 0;
+    }
+
+    int Lua::Save(lua_State * lua_state)
+    {
+        Scene::Get()->Save();
+        return 0;
+    }
+
+    int Lua::Quit(lua_State * lua_state)
+    {
+        CloseWindow();
+        return 0;
+    }
+
+    Lua *Lua::Get()
+    {
+        static std::unique_ptr<Lua> lua = std::make_unique<Lua>();
+        return lua.get();
+    }
+
+    lua_State *Lua::GetState()
+    {
+        return this->lua_state;
+    }

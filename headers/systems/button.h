@@ -12,6 +12,7 @@
 #include "components/colour.h"
 #include "components/clickable.h"
 #include "components/text.h"
+#include "systems/characterControlSystem.h"
 
 struct ButtonSystem
 {
@@ -21,7 +22,7 @@ struct ButtonSystem
 
         for (auto [entity, box, clickable, colour] : view.each())
         {
-            if (CheckCollisionPointRec(GetMousePosition(), box.rectangle) && IsMouseButtonPressed(0))
+            if (IsMouseButtonPressed(0) && CheckCollisionPointRec(GetMousePosition(), box.rectangle))
             {
                 /* code */
                 Lua::Get()->GetGlobal(clickable.luaFuncName.data());

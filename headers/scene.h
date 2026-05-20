@@ -26,9 +26,13 @@ public:
 
     template <typename T, typename... Args>
     inline void AddComponent(entt::entity entity, Args &&...args);
+    template <typename T>
+    inline T GetComponent(entt::entity entity);
+    template <typename T>
+    inline void RemoveComponent(entt::entity entity);
     entt::registry &GetRegistry();
     static Scene *Get();
-    static int Save(lua_State *);
+    static void Save();
 
 private:
     entt::registry registry;
@@ -41,8 +45,20 @@ template <typename T, typename... Args>
     this->registry.emplace<T>(this->entity, std::forward<Args>(args)...);
     return *this;
 }
+
 template <typename T, typename... Args>
 void Scene::AddComponent(entt::entity entity, Args &&...args)
 {
-    this->registry.emplace<T>(entity, std::forward<Args>(args)...);
+    this->registry.emplace_or_replace<T>(entity, std::forward<Args>(args)...);
+}
+template <typename T>
+T Scene::GetComponent(entt::entity entity)
+{
+    return this->registry.get<T>(entity);
+}
+
+template <typename T>
+void Scene::RemoveComponent(entt::entity entity)
+{
+    this->registry.remove<T>(entity);
 }

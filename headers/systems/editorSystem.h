@@ -14,6 +14,7 @@
 #include "components/text.h"
 #include "components/typeName.h"
 #include "components/selector.h"
+#include "components/sprite.h"
 
 static TypeName current = TypeName{"Ground"};
 
@@ -21,11 +22,15 @@ struct EditorSystem
 {
     inline static void Click(entt::registry &registry)
     {
+        if (!IsMouseButtonPressed(0))
+            return;
         auto view = registry.view<Box, TypeName>();
+
+        auto mousepos = ScreenSpaceToWorld(GetMousePosition(), false);
 
         for (auto [entity, box, t] : view.each())
         {
-            if (CheckCollisionPointRec(GetMousePosition(), box.rectangle) && IsMouseButtonPressed(0))
+            if (CheckCollisionPointRec(mousepos, box.rectangle))
             {
                 // Clicked box is a placement selector
                 if (registry.try_get<Selector>(entity))
@@ -39,6 +44,10 @@ struct EditorSystem
                     if (t.typeName != current.typeName)
                     {
                         t = current;
+                        Image image = LoadImage(("textures/" + t.typeName + ".png").c_str());
+                        Texture tex = LoadTextureFromImage(image);
+                        UnloadImage(image);
+                        registry.emplace_or_replace<Sprite>(entity, tex);
                     }
                     // Change stuff like sprite maybe
                 }
