@@ -36,9 +36,9 @@ creatables = {
         local ent = CreateEntity()
         AddComponent(ent, "Sprite", "textures/Blink2.png", 1)
         AddComponent(ent, "Position", x, y)
-        AddComponent(ent, "CharacterController", 100.0);
+        AddComponent(ent, "CharacterController", 800.0);
         AddComponent(ent, "Velocity", 50.0, 0.0, 0.0);
-        AddComponent(ent, "BoxCollider", 6 , 16 , (16 - 6) / 2, 0, true);
+        AddComponent(ent, "BoxCollider", 6 , 16 , 0, 0, true);
         AddComponent(ent, "luaBehaviour", "./scripts/behaviorTest.lua")
         -- AddComponent(ent, "TypeName", "Player")
         return ent
