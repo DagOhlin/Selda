@@ -38,7 +38,7 @@ creatables = {
         AddComponent(ent, "Position", x, y)
         AddComponent(ent, "CharacterController", 800.0);
         AddComponent(ent, "Velocity", 50.0, 0.0, 0.0);
-        AddComponent(ent, "BoxCollider", 6 , 16 , 0, 0, true);
+        AddComponent(ent, "BoxCollider", 6 , 16 , 4, 0, true);
         AddComponent(ent, "luaBehaviour", "./scripts/behaviorTest.lua")
         -- AddComponent(ent, "TypeName", "Player")
         return ent
