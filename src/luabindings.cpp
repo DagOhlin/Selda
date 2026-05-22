@@ -31,6 +31,7 @@ Lua::Lua() : lua_state(luaL_newstate())
     this->MakeFunc(Lua::Save, "Save");
     this->MakeFunc(Lua::GetComponent, "GetComponent");
     this->MakeFunc(Lua::RemoveEntity, "RemoveEntity");
+    this->MakeFunc(Lua::RemoveComponent, "RemoveComponent");
 }
 
 Lua::~Lua()
@@ -274,7 +275,7 @@ int Lua::AddComponent(lua_State *lua_state)
         float speed = lua->PopFloat(ic.Get());
         Scene::Get()->AddComponent<CharacterController>(entity, speed);
     }
-    else if (component == "luaBehaviour")
+    else if (component == "LuaBehaviour")
     {
         std::string path = lua->PopString(ic.Get());
 
@@ -497,6 +498,10 @@ int Lua::RemoveComponent(lua_State *lua_state)
     else if (component == "TypeName")
     {
         scene->RemoveComponent<TypeName>(entity);
+    }
+    else if (component == "LuaBehaviour")
+    {
+        scene->RemoveComponent<Behaviour>(entity);
     }
     else if (component == "Selector")
     {
