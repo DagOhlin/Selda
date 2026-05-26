@@ -5,15 +5,14 @@
 #include "components/velocity.h"
 #include "components/characterController.h"
 #include "components/boxCollider.h"
-
-static Vector2 playerPos = {0, 0};
+#include <iostream>
 
 static Vector2 ScreenSpaceToWorld(Vector2 pixelPos, bool reversed = false)
 {
-
+    Scene *scene = Scene::Get();
     float scale = 1;
-    float changeX = -playerPos.x + GetScreenWidth() / 2 - scale * 8;
-    float changeY = -playerPos.y + GetScreenHeight() / 2 - scale * 8;
+    float changeX = -scene->player.x + GetScreenWidth() / 2 - scale * 8;
+    float changeY = -scene->player.y + GetScreenHeight() / 2 - scale * 8;
 
     if (reversed)
     {
@@ -47,8 +46,8 @@ struct CharacterControlSystem
                 velocity.velocity.x -= characterController.speed;
             if (IsKeyDown(KEY_D))
                 velocity.velocity.x += characterController.speed;
-
-            playerPos = pos.pos;
+            Scene *scene = Scene::Get();
+            scene->player = pos.pos;
         }
     }
 };

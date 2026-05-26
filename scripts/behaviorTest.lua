@@ -8,7 +8,7 @@ function monster:BehaviorLoop()
         local deltaTime = coroutine.yield() --works well but not sure when you might want to pass other things
         
         self.lifespan = self.lifespan - deltaTime
-        print("Monster dancing, ID:", self.ID, "time to live:", self.lifespan)
+        -- print("Monster dancing, ID:", self.ID, "time to live:", self.lifespan)
         
     end
     

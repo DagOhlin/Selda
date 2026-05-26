@@ -21,6 +21,7 @@ end
 function Play(entity) 
     ClearScene()
     loadscene:LoadScene(false)
+    print(GetPlayerPos())
 end
 
 function Editor(entity)

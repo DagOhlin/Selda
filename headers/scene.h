@@ -1,6 +1,7 @@
 #pragma once
 #include <entt/entt.hpp>
 #include <lua.hpp>
+#include <raylib.h>
 
 class ObjectBuilder
 {
@@ -34,6 +35,8 @@ public:
     entt::registry &GetRegistry();
     static Scene *Get();
     static void Save();
+
+    Vector2 player;
 
 private:
     entt::registry registry;

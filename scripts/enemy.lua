@@ -6,11 +6,6 @@ function monster:BehaviorLoop()
     while self.lifespan > 0 do
         
         local deltaTime = coroutine.yield() --works well but not sure when you might want to pass other things
-        print("Alive")
-        self.lifespan = self.lifespan - deltaTime
-        if (self.lifespan < 0) then
-            RemoveEntity(self.ID)
-        end
         
     end
     
@@ -28,6 +23,17 @@ end
 function monster:OnUpdate(delta)
     if coroutine.status(self.co) ~= "dead" then --dead is a great thing to call it
         
+        local px, py = GetPlayerPos();
+        local mx, my = GetComponent(self.ID, "Position")
+        local monsterSpeed = 20
+
+        local dirx, diry  = px - mx, py - my
+
+        print(dirx, diry)
+
+        speed = math.sqrt(dirx * dirx + diry * diry)
+        
+        AddComponent(self.ID, "Velocity", 10000, dirx * monsterSpeed / speed, diry * monsterSpeed / speed)
         local success, err = coroutine.resume(self.co, delta)
         
         if not success then

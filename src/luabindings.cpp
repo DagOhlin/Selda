@@ -19,6 +19,8 @@
 #include "components/typeName.h"
 #include "components/selector.h"
 
+#include "systems/characterControlSystem.h"
+
 #include "util.h"
 
 Lua::Lua() : lua_state(luaL_newstate())
@@ -32,6 +34,7 @@ Lua::Lua() : lua_state(luaL_newstate())
     this->MakeFunc(Lua::GetComponent, "GetComponent");
     this->MakeFunc(Lua::RemoveEntity, "RemoveEntity");
     this->MakeFunc(Lua::RemoveComponent, "RemoveComponent");
+    this->MakeFunc(Lua::GetPlayerPos, "GetPlayerPos");
 }
 
 Lua::~Lua()
@@ -321,17 +324,19 @@ int Lua::AddComponent(lua_State *lua_state)
 
     auto func = lua_tocfunction(lua_state, -1);
 
-    lua_settop(lua->GetState(), 0);
+    lua_settop(lua->GetState(), -ic.Peak());
 
     return 0;
 }
 int Lua::GetComponent(lua_State *lua_state)
 {
-
     auto ic = Incrementer(1);
     Lua *lua = Lua::Get();
     const entt::entity entity = (entt::entity)lua->PopInt(ic.Get());
     std::string component = lua->PopString(ic.Get());
+    Lua::Get()->DumpStack();
+    lua_settop(lua->GetState(), -ic.Peak());
+
     Scene *scene = Scene::Get();
 
     if (component == "Position")
@@ -439,7 +444,10 @@ int Lua::GetComponent(lua_State *lua_state)
         // lua_pushnil
     }
     else
+    {
+
         throw std::runtime_error(std::string("Dis is no component, here atleast") + std::string(component));
+    }
     return 0;
 }
 
@@ -449,6 +457,7 @@ int Lua::RemoveComponent(lua_State *lua_state)
     Lua *lua = Lua::Get();
     const entt::entity entity = (entt::entity)lua->PopInt(ic.Get());
     std::string component = lua->PopString(ic.Get());
+    lua_settop(lua->GetState(), -ic.Peak());
     Scene *scene = Scene::Get();
 
     if (component == "Position")
@@ -528,6 +537,15 @@ int Lua::Quit(lua_State *lua_state)
 {
     CloseWindow();
     return 0;
+}
+
+int Lua::GetPlayerPos(lua_State *lua_state)
+{
+    Vector2 pos = Scene::Get()->player;
+    Lua::Get()->PushFloat(pos.x);
+    Lua::Get()->PushFloat(pos.y);
+
+    return 2;
 }
 
 Lua *Lua::Get()
