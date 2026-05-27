@@ -21,7 +21,6 @@ end
 function Play(entity) 
     ClearScene()
     loadscene:LoadScene(false)
-    print(GetPlayerPos())
 end
 
 function Editor(entity)
@@ -29,6 +28,11 @@ function Editor(entity)
     loadscene:LoadScene(true)
 end
 
+function MainMenu()
+    ClearScene()
+    local button1 = creatables.button(100, 100, Play, "Play")
+    local button2 = creatables.button(100, 200, Editor, "Editor")
+end
 
-button1 = creatables.button(100, 100, Play, "Play")
-button2 = creatables.button(100, 200, Editor, "Editor")
+MainMenu()
+

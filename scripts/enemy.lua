@@ -17,12 +17,12 @@ function monster:BehaviorLoop()
 
         local dirx, diry  = px - mx, py - my
 
-        dist = math.sqrt(dirx * dirx + diry * diry)
+        local dist = math.sqrt(dirx * dirx + diry * diry)
 
         if dist < 20 and lastHit + hitCooldown < timer then
             lastHit = timer
-            playerHealth = GetComponent(playerID, "Health")
-            playerHealth = playerHealth - 1
+            local playerHealth = GetComponent(playerID, "Health")
+            local playerHealth = playerHealth - 1
             if playerHealth <= 0 then
                 Quit()
             end

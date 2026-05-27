@@ -52,6 +52,7 @@ function LoadScene:CreateEditorEntities(x, y, block)
             entity = creatables.ground(x, y)
         elseif (object == "Enemy") then
             entity = creatables.enemy(x, y)
+            RemoveComponent(entity, "LuaBehaviour")
         elseif (object == "Player") then
             entity = creatables.player(x, y)
         end
@@ -92,6 +93,7 @@ function LoadScene:LoadScene(editor)
         -- AddComponent(ent, "TypeName", "Ground")
         -- AddComponent(ent, "Selector")
         local button = creatables.button(64, y * 16, Save, "Save")
+        local button = creatables.button(512, y * 16, MainMenu, "Back")
     else
         healthText = creatables.text(0,0, "Health: 20")
     end
