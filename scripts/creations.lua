@@ -2,6 +2,7 @@ print(":)")
 
 playerID = nil
 enemies = {}
+bosses = {}
 
 creatables = {
     ground = function(x, y) 
@@ -25,6 +26,15 @@ creatables = {
         return ent
     end,
 
+    chest = function(x, y)
+        local ent = CreateEntity()
+        AddComponent(ent, "Sprite", "textures/Chest.png", 1)
+        AddComponent(ent, "Position", x, y)
+        AddComponent(ent, "LuaBehaviour", "./scripts/chest.lua")
+        -- AddComponent(ent, "TypeName", "Wall")
+        
+        return ent
+    end,
     key = function(x, y)
         local ent = CreateEntity()
         AddComponent(ent, "Sprite", "textures/Key.png", 1)
@@ -55,6 +65,18 @@ creatables = {
         AddComponent(ent, "LuaBehaviour", "./scripts/enemy.lua")
         AddComponent(ent, "Health", 5)
         table.insert(enemies, ent)
+
+        return ent
+    end,
+
+    boss = function(x, y)
+        local ent = CreateEntity()
+        AddComponent(ent, "BoxCollider", 16, 16, 0, 0, true);
+        AddComponent(ent, "Sprite", "textures/Boss.png", 1)
+        AddComponent(ent, "Position", x, y)
+        AddComponent(ent, "LuaBehaviour", "./scripts/boss.lua")
+        AddComponent(ent, "Health", 1)
+        table.insert(bosses, ent)
 
         return ent
     end,
@@ -90,13 +112,13 @@ creatables = {
         local button = CreateEntity()
 
         local text = text or ""
-        local width = width or 100
-        local height = height or 50
+        local width = width or 200
+        local height = height or 100
         local color = color or {r = 0, g = 0, b = 255, a = 255}
         local scale = scale or 1
 
         -- AddComponent(button, "TypeName", "Button")
-        AddComponent(button, "Box", x, y, 200, 100)
+        AddComponent(button, "Box", x, y, width, height)
         AddComponent(button, "Text", text, 0, 0, 60, color.r, color.g, color.b, color.a)
         AddComponent(button, "Colour", 40, 40, 40, 255)
         AddComponent(button, "Scale", scale)

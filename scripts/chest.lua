@@ -1,8 +1,6 @@
 
 local player = {}
 
-PlayerHasKey = 0
-
 function player:BehaviorLoop()
     while true do
         if playerID == nil then return end
@@ -14,9 +12,9 @@ function player:BehaviorLoop()
         local ex, ey = GetComponent(playerID, "Position")
         local dist = math.sqrt((ex - px) * (ex - px) + (ey - py) * (ey - py))
 
-        if dist < 20 then 
-            PlayerHasKey = PlayerHasKey - 1 
-            RemoveEntity(self.ID)
+        if dist < 60 and #bosses == 0 then 
+            text = creatables.text(300, 100, "You Won!")
+            button = creatables.button(300, 200, MainMenu, "Main Menu", 320)
         end
         
     end
@@ -24,7 +22,6 @@ end
 
 -- remeber to allways use onCreate exactly, C++ is looking by name
 function player:OnCreate()
-    PlayerHasKey = PlayerHasKey + 1
     self.co = coroutine.create(function() self:BehaviorLoop() end)
 end
 

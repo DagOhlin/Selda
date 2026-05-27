@@ -34,29 +34,29 @@ int main()
     SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
     RenderTexture2D canvas = LoadRenderTexture(screenWidth, screenHeight);
-    
-    SetTextureFilter(canvas.texture, TEXTURE_FILTER_POINT);//this makes the pixels nu blury when scaled
+
+    SetTextureFilter(canvas.texture, TEXTURE_FILTER_POINT); // this makes the pixels nu blury when scaled
     //--------------------------------------------------------------------------------------
 
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
-        if (IsKeyPressed(KEY_F11)) 
+        if (IsKeyPressed(KEY_F11))
         {
-            if (IsWindowFullscreen()) 
+            if (IsWindowFullscreen())
             {
                 ToggleFullscreen();
-                SetWindowSize(screenWidth, screenHeight); 
-            } 
-            else 
+                SetWindowSize(screenWidth, screenHeight);
+            }
+            else
             {
                 int monitor = GetCurrentMonitor();
-                
+
                 SetWindowSize(GetMonitorWidth(monitor), GetMonitorHeight(monitor));
                 ToggleFullscreen();
             }
         }
-        // new stuff 
+        // new stuff
 
         float scaleX = (float)GetScreenWidth() / screenWidth;
         float scaleY = (float)GetScreenHeight() / screenHeight;
@@ -64,22 +64,21 @@ int main()
         SetMouseOffset(0, 0);
 
         BeginTextureMode(canvas);
-            ClearBackground(RAYWHITE);
+        ClearBackground(Color{100, 100, 200, 255});
 
-            scene->Update();
-            DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+        scene->Update();
         EndTextureMode();
 
         BeginDrawing();
-            ClearBackground(BLACK); 
+        ClearBackground(BLACK);
 
-            Rectangle sourceRec = { 0.0f, 0.0f, (float)canvas.texture.width, -(float)canvas.texture.height };
-            
-            Rectangle destRec = { 0.0f, 0.0f, (float)GetScreenWidth(), (float)GetScreenHeight() };
-            
-            Vector2 origin = { 0.0f, 0.0f };
+        Rectangle sourceRec = {0.0f, 0.0f, (float)canvas.texture.width, -(float)canvas.texture.height};
 
-            DrawTexturePro(canvas.texture, sourceRec, destRec, origin, 0.0f, WHITE);
+        Rectangle destRec = {0.0f, 0.0f, (float)GetScreenWidth(), (float)GetScreenHeight()};
+
+        Vector2 origin = {0.0f, 0.0f};
+
+        DrawTexturePro(canvas.texture, sourceRec, destRec, origin, 0.0f, WHITE);
 
         // Tick
 

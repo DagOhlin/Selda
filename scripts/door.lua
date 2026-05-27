@@ -7,12 +7,12 @@ function player:BehaviorLoop()
 
         local deltaTime = coroutine.yield() --works well but not sure when you might want to pass other things
 
-        px, py = GetComponent(self.ID, "Position")
+        local px, py = GetComponent(self.ID, "Position")
 
-        ex, ey = GetComponent(playerID, "Position")
-        dist = math.sqrt((ex - px) * (ex - px) + (ey - py) * (ey - py))
+        local ex, ey = GetComponent(playerID, "Position")
+        local dist = math.sqrt((ex - px) * (ex - px) + (ey - py) * (ey - py))
 
-        if dist < 60 and PlayerHasKey then 
+        if dist < 60 and PlayerHasKey == 0 then 
             RemoveEntity(self.ID)
         end
         

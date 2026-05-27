@@ -20,12 +20,12 @@ function player:BehaviorLoop()
             swordEntity = nil
         end
 
+        local px, py = GetComponent(self.ID, "Position")
+
         if swordEntity ~= nil then
-            
             AddComponent(swordEntity, "Position", px, py)
         end
 
-        px, py = GetComponent(self.ID, "Position")
 
         if IsPressed(" ") and (lastHit + hitCooldown) < timer then
             lastHit = timer
@@ -33,8 +33,8 @@ function player:BehaviorLoop()
             
 
             for index, monster in ipairs(enemies) do
-                ex, ey = GetComponent(monster, "Position")
-                dist = math.sqrt((ex - px) * (ex - px) + (ey - py) * (ey - py))
+                local ex, ey = GetComponent(monster, "Position")
+                local dist = math.sqrt((ex - px) * (ex - px) + (ey - py) * (ey - py))
 
                 if dist < 40 then 
                     didHit = true
@@ -42,6 +42,24 @@ function player:BehaviorLoop()
                     monsterHealth = monsterHealth - 1
                     if monsterHealth <= 0 then
                         table.remove(enemies, index)
+                        RemoveEntity(monster)
+                    else
+                        AddComponent(monster, "Health", monsterHealth)
+                    end
+
+                end
+            end
+            
+            for index, monster in ipairs(bosses) do
+                local ex, ey = GetComponent(monster, "Position")
+                local dist = math.sqrt((ex - px) * (ex - px) + (ey - py) * (ey - py))
+
+                if dist < 40 then 
+                    didHit = true
+                    monsterHealth = GetComponent(monster, "Health")
+                    monsterHealth = monsterHealth - 1
+                    if monsterHealth <= 0 then
+                        table.remove(bosses, index)
                         RemoveEntity(monster)
                     else
                         AddComponent(monster, "Health", monsterHealth)

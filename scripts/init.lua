@@ -38,6 +38,7 @@ function MainMenu()
     ClearSceneSafe()
     local button1 = creatables.button(100, 100, Play, "Play")
     local button2 = creatables.button(100, 200, Editor, "Editor")
+    local button2 = creatables.button(100, 300, Quit, "Quit")
 end
 
 MainMenu()

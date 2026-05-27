@@ -31,6 +31,7 @@ void Scene::Update()
 
 void Scene::Clear()
 {
+    this->player = {150, 220};
     this->registry.clear();
 }
 
@@ -56,7 +57,7 @@ void Scene::Save()
     std::sort(entities.begin(), entities.end(), [](const std::tuple<entt::entity, Position, Sprite, TypeName> &a, const std::tuple<entt::entity, Position, Sprite, TypeName> &b)
               { return (std::get<1>(a).pos.x + std::get<1>(a).pos.y * 10000) < (std::get<1>(b).pos.x + std::get<1>(b).pos.y * 10000); });
 
-    std::ofstream file("scenes/test.simon");
+    std::ofstream file("scenes/main.simon");
 
     auto start = entities.begin();
     if (start == entities.end())
@@ -70,7 +71,7 @@ void Scene::Save()
         auto &typeName = std::get<3>(*start).typeName;
         auto &ent = std::get<0>(*start);
         if (reg.try_get<Selector>(ent))
-            return;
+            continue;
         if (pos.y != y)
         {
             y = pos.y;

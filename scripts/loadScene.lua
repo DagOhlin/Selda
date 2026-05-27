@@ -48,6 +48,14 @@ function LoadScene:CreateEntities(x, y, block)
             entity = creatables.ground(x, y)
             AddComponent(entity, "Scale", scale)
             entity = creatables.player(x, y)
+        elseif (object == "Boss") then
+            entity = creatables.ground(x, y)
+            AddComponent(entity, "Scale", scale)
+            entity = creatables.boss(x, y)
+        elseif (object == "Chest") then
+            entity = creatables.ground(x, y)
+            AddComponent(entity, "Scale", scale)
+            entity = creatables.chest(x, y)
         end
 
         AddComponent(entity, "Scale", scale)
@@ -64,6 +72,7 @@ function LoadScene:CreateEditorEntities(x, y, block)
             entity = creatables.ground(x, y)
         elseif (object == "Enemy") then
             entity = creatables.enemy(x, y)
+            AddComponent(entity, "Box", x, y, 16, 16)
             RemoveComponent(entity, "LuaBehaviour")
         elseif (object == "Player") then
             entity = creatables.player(x, y)
@@ -72,6 +81,10 @@ function LoadScene:CreateEditorEntities(x, y, block)
             entity = creatables.key(x, y)
         elseif (object == "Door") then
             entity = creatables.door(x, y)
+        elseif (object == "Boss") then
+            entity = creatables.boss(x, y)
+        elseif (object == "Chest") then
+            entity = creatables.chest(x, y)
         end
         
         AddComponent(entity, "TypeName", object)
