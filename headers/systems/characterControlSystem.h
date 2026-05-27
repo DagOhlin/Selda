@@ -11,8 +11,8 @@ static Vector2 ScreenSpaceToWorld(Vector2 pixelPos, bool reversed = false)
 {
     Scene *scene = Scene::Get();
     float scale = 1;
-    float changeX = -scene->player.x + GetScreenWidth() / 2 - scale * 8;
-    float changeY = -scene->player.y + GetScreenHeight() / 2 - scale * 8;
+    float changeX = -scene->player.x + 800 / 2 - scale * 8;
+    float changeY = -scene->player.y + 450 / 2 - scale * 8;
 
     if (reversed)
     {
