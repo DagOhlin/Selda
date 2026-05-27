@@ -15,6 +15,7 @@ function player:BehaviorLoop()
         if dist < 60 and #bosses == 0 then 
             text = creatables.text(300, 100, "You Won!")
             button = creatables.button(300, 200, MainMenu, "Main Menu", 320)
+            break
         end
         
     end

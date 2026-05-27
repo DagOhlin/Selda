@@ -1,11 +1,11 @@
 Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall
+Wall|Ground|Ground|Key|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Wall|Ground|Ground|Ground|Ground|Ground|Ground|Wall
+Door|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Wall|Ground|Ground|Player|Ground|Ground|Wall
+Wall|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Wall|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Wall
 Wall|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Wall|Ground|Ground|Ground|Ground|Ground|Ground|Wall
-Wall|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Wall|Ground|Ground|Player|Ground|Ground|Wall
-Door|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Wall|Ground|Ground|Ground|Ground|Ground|Wall
-Wall|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Enemy|Ground|Ground|Ground|Wall|Ground|Ground|Ground|Ground|Ground|Ground|Wall
 Wall|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Wall|Ground|Ground|Ground|Ground|Ground|Wall
-Wall|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Wall|Ground|Ground|Ground|Ground|Ground|Wall
-Wall|Ground|Ground|Ground|Ground|Ground|Ground|Enemy|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Wall|Ground|Ground|Ground|Ground|Wall
+Wall|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Wall|Ground|Ground|Key|Ground|Ground|Wall
+Wall|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Wall|Ground|Ground|Ground|Ground|Wall
 Wall|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Wall|Ground|Ground|Ground|Ground|Ground|Wall
 Wall|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Wall|Wall|Wall|Wall|Wall|Ground|Ground|Ground|Ground|Wall
 Wall|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Enemy|Ground|Wall|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Wall
@@ -23,6 +23,6 @@ Wall|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Groun
 Wall|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Wall
 Wall|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Wall
 Wall|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Wall
-Wall|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Enemy|Ground|Ground|Wall
+Wall|Key|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Enemy|Ground|Ground|Wall
 Wall|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Key|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Ground|Wall
 Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall|Wall

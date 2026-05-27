@@ -81,6 +81,7 @@ function LoadScene:CreateEditorEntities(x, y, block)
             entity = creatables.key(x, y)
         elseif (object == "Door") then
             entity = creatables.door(x, y)
+            goto continue
         elseif (object == "Boss") then
             entity = creatables.boss(x, y)
         elseif (object == "Chest") then
@@ -88,6 +89,7 @@ function LoadScene:CreateEditorEntities(x, y, block)
         end
         
         AddComponent(entity, "TypeName", object)
+        ::continue::
     end
 end
 
@@ -118,11 +120,16 @@ function LoadScene:LoadScene(editor)
         AddComponent(ent, "Selector")
         AddComponent(ent, "Box", -100, (16 + 2) * 2, 16, 16)
 
+        ent = creatables.key(-100, (16 + 2) * 3)
+        AddComponent(ent, "TypeName", "Key")
+        AddComponent(ent, "Selector")
+        AddComponent(ent, "Box", -100, (16 + 2) * 3, 16, 16)
+
         -- ent = creatables.ground(16, y * 16)
         -- AddComponent(ent, "TypeName", "Ground")
         -- AddComponent(ent, "Selector")
-        local button = creatables.button(0, (16 + 2) * 3, Save, "Save")
-        local button = creatables.button(0, (16 + 2) * 8, MainMenu, "Back")
+        local button = creatables.button(0, (16 + 2) * 4, Save, "Save")
+        local button = creatables.button(0, (16 + 2) * 9, MainMenu, "Back")
     else
         local y = 1
         for line in io.lines("scenes/boss.simon") do

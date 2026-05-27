@@ -46,7 +46,7 @@ void Scene::Save()
 {
     auto scene = Scene::Get();
     auto &reg = scene->GetRegistry();
-    auto view = reg.view<Position, Sprite, TypeName>();
+    auto view = reg.view<Position, Sprite, TypeName>(entt::exclude<Selector>);
     std::vector<std::tuple<entt::entity, Position, Sprite, TypeName>> entities;
 
     for (auto [entity, pos, sprite, typeName] : view.each())
@@ -62,16 +62,20 @@ void Scene::Save()
     auto start = entities.begin();
     if (start == entities.end())
         return;
+
     file << std::get<3>(*start).typeName;
     start++;
+
+    if (start == entities.end())
+        return;
+
     float y = std::get<1>(*start).pos.y;
     for (auto o = start; start != entities.end(); start++)
     {
         auto &pos = std::get<1>(*start).pos;
         auto &typeName = std::get<3>(*start).typeName;
         auto &ent = std::get<0>(*start);
-        if (reg.try_get<Selector>(ent))
-            continue;
+
         if (pos.y != y)
         {
             y = pos.y;

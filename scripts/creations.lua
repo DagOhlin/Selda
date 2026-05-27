@@ -3,6 +3,7 @@ print(":)")
 playerID = nil
 enemies = {}
 bosses = {}
+PlayerHasKey = 0
 
 creatables = {
     ground = function(x, y) 
@@ -36,6 +37,7 @@ creatables = {
         return ent
     end,
     key = function(x, y)
+        PlayerHasKey = PlayerHasKey + 1
         local ent = CreateEntity()
         AddComponent(ent, "Sprite", "textures/Key.png", 1)
         AddComponent(ent, "Position", x, y)
