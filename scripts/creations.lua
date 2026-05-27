@@ -1,6 +1,7 @@
 print(":)")
 
-playerID = 0
+playerID = nil
+enemies = {}
 
 creatables = {
     ground = function(x, y) 
@@ -31,6 +32,7 @@ creatables = {
         AddComponent(ent, "Position", x, y)
         AddComponent(ent, "LuaBehaviour", "./scripts/enemy.lua")
         AddComponent(ent, "Health", 5)
+        table.insert(enemies, ent)
 
         return ent
     end,
@@ -55,7 +57,7 @@ creatables = {
         AddComponent(ent, "CharacterController", 800.0);
         AddComponent(ent, "Velocity", 50.0, 0.0, 0.0);
         AddComponent(ent, "BoxCollider", 6 , 16 , 4, 0, true);
-        AddComponent(ent, "LuaBehaviour", "./scripts/behaviorTest.lua")
+        AddComponent(ent, "LuaBehaviour", "./scripts/player.lua")
         AddComponent(ent, "Health", 20)
 
         -- AddComponent(ent, "TypeName", "Player")
@@ -80,6 +82,13 @@ creatables = {
 
         return button
     end
+    -- ,
+
+    -- killMonster = function(monsterID)
+    --     table.remove(monsterID)
+    --     RemoveEntity(monsterID)
+
+    -- end
 }
 
 return creatables

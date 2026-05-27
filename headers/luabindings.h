@@ -40,6 +40,7 @@ public:
     static int ClearScene(lua_State *lua_state);
     static int Save(lua_State *lua_state);
     static int Quit(lua_State *lua_state);
+    static int IsPressed(lua_State *lua_state);
 
     // Singleton
     static Lua *Get();

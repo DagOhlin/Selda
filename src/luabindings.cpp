@@ -36,6 +36,7 @@ Lua::Lua() : lua_state(luaL_newstate()), owns_lua_state(true)
     this->MakeFunc(Lua::RemoveEntity, "RemoveEntity");
     this->MakeFunc(Lua::RemoveComponent, "RemoveComponent");
     this->MakeFunc(Lua::GetPlayerPos, "GetPlayerPos");
+    this->MakeFunc(Lua::IsPressed, "IsPressed");
 }
 
 Lua::Lua(lua_State *L) : lua_state(L), owns_lua_state(false)
@@ -179,7 +180,7 @@ int Lua::AddComponent(lua_State *lua_state)
     const entt::entity entity = (entt::entity)lua.PopInt(ic.Get());
     std::string component = lua.PopString(ic.Get());
 
-    std::cout << "Adding component " << component << " To entity " << (int)entity << "\n";
+    // std::cout << "Adding component " << component << " To entity " << (int)entity << "\n";
 
     if (component == "Position")
     {
@@ -554,6 +555,15 @@ int Lua::Quit(lua_State *lua_state)
 {
     CloseWindow();
     return 0;
+}
+
+int Lua::IsPressed(lua_State *lua_state)
+{
+    Lua lua(lua_state);
+    std::string key = lua.PopString(1);
+    lua_settop(lua_state, 0);
+    lua.PushBool(IsKeyPressed(key[0]));
+    return 1;
 }
 
 int Lua::GetPlayerPos(lua_State *lua_state)

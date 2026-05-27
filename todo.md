@@ -7,7 +7,7 @@
 - Key Pickup
 - Locked Door
 - Boss like enemy
-- Simple attack
+- ~~Simple attack~~
 - Quit to menu from in game / ~~editor~~
 - Better menu
 - Complete editor

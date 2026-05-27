@@ -8,7 +8,8 @@ function monster:BehaviorLoop()
     local hitCooldown = 1
 
     while true do
-        
+        if playerID == nil then return end
+
         local deltaTime = coroutine.yield() --works well but not sure when you might want to pass other things
         timer = timer + deltaTime
         local px, py = GetComponent(playerID, "Position");

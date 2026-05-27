@@ -4,6 +4,12 @@
 -- void ClearScene()
 -- void Quit()
 
+function ClearSceneSafe() 
+    enemies = {}
+    playerID = nil
+    ClearScene()
+end
+
 
 print("hello")
 local success, creatables = pcall(dofile, "scripts/creations.lua")
@@ -19,17 +25,17 @@ if not success then
 end
 
 function Play(entity) 
-    ClearScene()
+    ClearSceneSafe()
     loadscene:LoadScene(false)
 end
 
 function Editor(entity)
-    ClearScene()
+    ClearSceneSafe()
     loadscene:LoadScene(true)
 end
 
 function MainMenu()
-    ClearScene()
+    ClearSceneSafe()
     local button1 = creatables.button(100, 100, Play, "Play")
     local button2 = creatables.button(100, 200, Editor, "Editor")
 end
