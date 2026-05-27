@@ -31,8 +31,12 @@ function monster:BehaviorLoop()
             AddComponent(healthText, "Text", "Health: " .. playerHealth, 0, 0, 60, 0, 0, 255, 255)
             AddComponent(playerID, "Health", playerHealth)
         end
-        
-        AddComponent(self.ID, "Velocity", 10000, dirx * monsterSpeed / dist, diry * monsterSpeed / dist)
+        if dist < 400 then
+            AddComponent(self.ID, "Velocity", 10000, dirx * monsterSpeed / dist, diry * monsterSpeed / dist)
+        else
+            AddComponent(self.ID, "Velocity", 10000, 0, 0)
+            
+        end
     end
 end
 

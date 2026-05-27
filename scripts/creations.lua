@@ -28,7 +28,7 @@ creatables = {
     enemy = function(x, y)
         local ent = CreateEntity()
         AddComponent(ent, "BoxCollider", 16, 16, 0, 0, true);
-        AddComponent(ent, "Sprite", "textures/Blink2.png", 1)
+        AddComponent(ent, "Sprite", "textures/Enemy.png", 1)
         AddComponent(ent, "Position", x, y)
         AddComponent(ent, "LuaBehaviour", "./scripts/enemy.lua")
         AddComponent(ent, "Health", 5)
@@ -56,7 +56,7 @@ creatables = {
         AddComponent(ent, "Position", x, y)
         AddComponent(ent, "CharacterController", 800.0);
         AddComponent(ent, "Velocity", 50.0, 0.0, 0.0);
-        AddComponent(ent, "BoxCollider", 6 , 16 , 4, 0, true);
+        AddComponent(ent, "BoxCollider", 6 , 12 , 4, 0, true);
         AddComponent(ent, "LuaBehaviour", "./scripts/player.lua")
         AddComponent(ent, "Health", 20)
 

@@ -60,6 +60,10 @@ function LoadScene:CreateEditorEntities(x, y, block)
         elseif (object == "Player") then
             entity = creatables.player(x, y)
             RemoveComponent(entity, "CharacterController")
+        elseif (object == "Key") then
+            entity = creatables.key(x, y)
+        elseif (object == "Door") then
+            entity = creatables.door(x, y)
         end
         
         AddComponent(entity, "TypeName", object)
@@ -78,28 +82,34 @@ function LoadScene:LoadScene(editor)
         end
         y = y + 1
     end
-    
     if editor then
-        local ent = creatables.wall(0, y * 16)
+        local ent = creatables.wall(-100, 0)
         AddComponent(ent, "TypeName", "Wall")
         AddComponent(ent, "Selector")
 
-        ent = creatables.ground(16, y * 16)
+        ent = creatables.ground(-100, 16 + 2 * 1)
         AddComponent(ent, "TypeName", "Ground")
         AddComponent(ent, "Selector")
         
-        ent = creatables.enemy(16 * 2, y * 16)
+        ent = creatables.enemy(-100, (16 + 2) * 2)
         AddComponent(ent, "TypeName", "Enemy")
         RemoveComponent(ent, "LuaBehaviour")
         AddComponent(ent, "Selector")
-        AddComponent(ent, "Box", 16 * 2, y * 16, 16, 16)
+        AddComponent(ent, "Box", -100, (16 + 2) * 2, 16, 16)
 
         -- ent = creatables.ground(16, y * 16)
         -- AddComponent(ent, "TypeName", "Ground")
         -- AddComponent(ent, "Selector")
-        local button = creatables.button(64, (y + 4) * 16, Save, "Save")
-        local button = creatables.button(512, (y + 4) * 16, MainMenu, "Back")
+        local button = creatables.button(0, (16 + 2) * 3, Save, "Save")
+        local button = creatables.button(0, (16 + 2) * 8, MainMenu, "Back")
     else
+        local y = 1
+        for line in io.lines("scenes/boss.simon") do
+            for x, block in pairs(split(line, "|"))  do
+                LoadScene:CreateEntities((-x + 1) * 16, y * 16, block)
+            end
+            y = y + 1
+        end
         healthText = creatables.text(0,0, "Health: 20")
     end
 end
