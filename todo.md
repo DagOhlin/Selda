@@ -9,7 +9,7 @@
 - Boss like enemy
 - ~~Simple attack~~
 - Quit to menu from in game / ~~editor~~
-- Better menu
+- ~~Better menu~~
 - Complete editor
 
 ## Maybe

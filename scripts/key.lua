@@ -1,8 +1,6 @@
 
 local player = {}
 
-PlayerHasKey = 0
-
 function player:BehaviorLoop()
     while true do
         if playerID == nil then return end
@@ -24,7 +22,6 @@ end
 
 -- remeber to allways use onCreate exactly, C++ is looking by name
 function player:OnCreate()
-    PlayerHasKey = PlayerHasKey + 1
     self.co = coroutine.create(function() self:BehaviorLoop() end)
 end
 
