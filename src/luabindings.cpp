@@ -346,7 +346,6 @@ int Lua::GetComponent(lua_State *lua_state)
     Lua lua(lua_state);
     const entt::entity entity = (entt::entity)lua.PopInt(ic.Get());
     std::string component = lua.PopString(ic.Get());
-    Lua::Get()->DumpStack();
     lua_settop(lua.GetState(), -ic.Peak());
 
     Scene *scene = Scene::Get();
@@ -454,6 +453,12 @@ int Lua::GetComponent(lua_State *lua_state)
         // Scene::Get()->GetComponent<Selector>(entity)._;
         throw std::runtime_error("No :)");
         // lua_pushnil
+    }
+    else if (component == "Health")
+    {
+        int health = Scene::Get()->GetComponent<Health>(entity).health;
+        lua.PushInt(health);
+        return 1;
     }
     else
     {

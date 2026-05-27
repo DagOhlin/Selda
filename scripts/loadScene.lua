@@ -92,7 +92,8 @@ function LoadScene:LoadScene(editor)
         -- AddComponent(ent, "TypeName", "Ground")
         -- AddComponent(ent, "Selector")
         local button = creatables.button(64, y * 16, Save, "Save")
-
+    else
+        healthText = creatables.text(0,0, "Health: 20")
     end
 end
 

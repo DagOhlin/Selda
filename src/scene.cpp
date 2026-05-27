@@ -6,6 +6,7 @@
 #include "systems/collisionSystem.h"
 #include "systems/luaBehaviorSystem.h"
 #include "systems/editorSystem.h"
+#include "systems/textSystem.h"
 #include "components/typeName.h"
 #include "components/selector.h"
 #include <fstream>
@@ -25,6 +26,7 @@ void Scene::Update()
     CollisionSystem::Update(this->GetRegistry());
     CharacterControlSystem::MoveBasedOnInput(this->GetRegistry());
     EditorSystem::Click(this->GetRegistry());
+    TextSystem::Draw(this->GetRegistry());
 }
 
 void Scene::Clear()

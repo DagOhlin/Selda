@@ -27,16 +27,11 @@ struct ButtonSystem
                 /* code */
                 Lua::Get()->GetGlobal(clickable.luaFuncName.data());
                 Lua::Get()->PushInt((int)entity);
-                lua_call(Lua::Get()->GetState(), 1, 0, 0);
+                lua_call(Lua::Get()->GetState(), 1, 0);
                 return;
             }
 
             DrawRectangle(box.rectangle.x, box.rectangle.y, box.rectangle.width, box.rectangle.height, colour.color);
-            Text *maybeText = registry.try_get<Text>(entity);
-            if (maybeText)
-            {
-                DrawText(maybeText->text.c_str(), box.rectangle.x + maybeText->pos.x, box.rectangle.y + maybeText->pos.y, maybeText->fontSize, maybeText->color);
-            }
         }
     }
 };

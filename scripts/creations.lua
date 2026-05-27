@@ -35,6 +35,18 @@ creatables = {
         return ent
     end,
 
+    text = function (x, y, text, width, height, color)
+        local width = width or 100
+        local height = height or 50
+        local color = color or {r = 0, g = 0, b = 255, a = 255}
+
+        local ent = CreateEntity()
+        AddComponent(ent, "Box", x, y, width, height)
+        AddComponent(ent, "Text", text, 0, 0, 60, color.r, color.g, color.b, color.a)
+
+        return ent
+    end,
+
     player = function(x, y)
         local ent = CreateEntity()
         playerID = ent
@@ -45,6 +57,7 @@ creatables = {
         AddComponent(ent, "BoxCollider", 6 , 16 , 4, 0, true);
         AddComponent(ent, "LuaBehaviour", "./scripts/behaviorTest.lua")
         AddComponent(ent, "Health", 20)
+
         -- AddComponent(ent, "TypeName", "Player")
         return ent
     end,
@@ -60,8 +73,8 @@ creatables = {
 
         -- AddComponent(button, "TypeName", "Button")
         AddComponent(button, "Box", x, y, 200, 100)
-        AddComponent(button, "Colour", 40, 40, 40, 255)
         AddComponent(button, "Text", text, 0, 0, 60, color.r, color.g, color.b, color.a)
+        AddComponent(button, "Colour", 40, 40, 40, 255)
         AddComponent(button, "Scale", scale)
         AddComponent(button, "Clickable", func)
 
