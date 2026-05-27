@@ -23,6 +23,7 @@ end
 function monster:OnUpdate(delta)
     if coroutine.status(self.co) ~= "dead" then --dead is a great thing to call it
         
+        print(playerID)
         local px, py = GetPlayerPos();
         local mx, my = GetComponent(self.ID, "Position")
         local monsterSpeed = 20

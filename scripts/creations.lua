@@ -1,5 +1,7 @@
 print(":)")
 
+playerID = 0
+
 creatables = {
     ground = function(x, y) 
         local ent = CreateEntity()
@@ -28,18 +30,21 @@ creatables = {
         AddComponent(ent, "Sprite", "textures/Blink2.png", 1)
         AddComponent(ent, "Position", x, y)
         AddComponent(ent, "LuaBehaviour", "./scripts/enemy.lua")
+        AddComponent(ent, "Health", 5)
 
         return ent
     end,
 
     player = function(x, y)
         local ent = CreateEntity()
+        playerID = ent
         AddComponent(ent, "Sprite", "textures/Blink2.png", 1)
         AddComponent(ent, "Position", x, y)
         AddComponent(ent, "CharacterController", 800.0);
         AddComponent(ent, "Velocity", 50.0, 0.0, 0.0);
         AddComponent(ent, "BoxCollider", 6 , 16 , 4, 0, true);
         AddComponent(ent, "LuaBehaviour", "./scripts/behaviorTest.lua")
+        AddComponent(ent, "Health", 20)
         -- AddComponent(ent, "TypeName", "Player")
         return ent
     end,

@@ -18,12 +18,13 @@
 #include "components/luaBehavior.h"
 #include "components/typeName.h"
 #include "components/selector.h"
+#include "components/health.h"
 
 #include "systems/characterControlSystem.h"
 
 #include "util.h"
 
-Lua::Lua() : lua_state(luaL_newstate())
+Lua::Lua() : lua_state(luaL_newstate()), owns_lua_state(true)
 {
     luaL_openlibs(this->lua_state);
     this->MakeFunc(Lua::CreateEntity, "CreateEntity");
@@ -37,10 +38,16 @@ Lua::Lua() : lua_state(luaL_newstate())
     this->MakeFunc(Lua::GetPlayerPos, "GetPlayerPos");
 }
 
+Lua::Lua(lua_State *L) : lua_state(L), owns_lua_state(false)
+{
+}
+
 Lua::~Lua()
 {
-
-    lua_close(this->lua_state);
+    if (this->owns_lua_state)
+    {
+        lua_close(this->lua_state);
+    }
 }
 
 void Lua::PushBool(bool b)
@@ -168,40 +175,40 @@ int Lua::RemoveEntity(lua_State *lua_state)
 int Lua::AddComponent(lua_State *lua_state)
 {
     auto ic = Incrementer(1);
-    Lua *lua = Lua::Get();
-    const entt::entity entity = (entt::entity)lua->PopInt(ic.Get());
-    std::string component = lua->PopString(ic.Get());
+    Lua lua(lua_state);
+    const entt::entity entity = (entt::entity)lua.PopInt(ic.Get());
+    std::string component = lua.PopString(ic.Get());
 
     std::cout << "Adding component " << component << " To entity " << (int)entity << "\n";
 
     if (component == "Position")
     {
-        float x = lua->PopFloat(ic.Get());
-        float y = lua->PopFloat(ic.Get());
+        float x = lua.PopFloat(ic.Get());
+        float y = lua.PopFloat(ic.Get());
 
         Scene::Get()->AddComponent<Position>(entity, x, y);
     }
     else if (component == "Box")
     {
-        float x = lua->PopFloat(ic.Get());
-        float y = lua->PopFloat(ic.Get());
-        float width = lua->PopFloat(ic.Get());
-        float height = lua->PopFloat(ic.Get());
+        float x = lua.PopFloat(ic.Get());
+        float y = lua.PopFloat(ic.Get());
+        float width = lua.PopFloat(ic.Get());
+        float height = lua.PopFloat(ic.Get());
 
         Scene::Get()->AddComponent<Box>(entity, x, y, width, height);
     }
     else if (component == "Colour")
     {
-        unsigned char r = lua->PopInt(ic.Get());
-        unsigned char g = lua->PopInt(ic.Get());
-        unsigned char b = lua->PopInt(ic.Get());
-        unsigned char a = lua->PopInt(ic.Get());
+        unsigned char r = lua.PopInt(ic.Get());
+        unsigned char g = lua.PopInt(ic.Get());
+        unsigned char b = lua.PopInt(ic.Get());
+        unsigned char a = lua.PopInt(ic.Get());
 
         Scene::Get()->AddComponent<Colour>(entity, r, g, b, a);
     }
     else if (component == "Speed")
     {
-        float speed = lua->PopInt(ic.Get());
+        float speed = lua.PopInt(ic.Get());
         Scene::Get()->AddComponent<Speed>(entity, speed);
     }
     else if (component == "Clickable")
@@ -214,24 +221,24 @@ int Lua::AddComponent(lua_State *lua_state)
     }
     else if (component == "Text")
     {
-        std::string text = lua->PopString(ic.Get());
+        std::string text = lua.PopString(ic.Get());
 
-        float x = lua->PopFloat(ic.Get());
-        float y = lua->PopFloat(ic.Get());
+        float x = lua.PopFloat(ic.Get());
+        float y = lua.PopFloat(ic.Get());
 
-        float fontSize = lua->PopFloat(ic.Get());
+        float fontSize = lua.PopFloat(ic.Get());
 
-        unsigned char r = lua->PopInt(ic.Get());
-        unsigned char g = lua->PopInt(ic.Get());
-        unsigned char b = lua->PopInt(ic.Get());
-        unsigned char a = lua->PopInt(ic.Get());
+        unsigned char r = lua.PopInt(ic.Get());
+        unsigned char g = lua.PopInt(ic.Get());
+        unsigned char b = lua.PopInt(ic.Get());
+        unsigned char a = lua.PopInt(ic.Get());
 
         Scene::Get()->AddComponent<Text>(entity, Color{r, g, b, a}, text, Vector2{x, y}, fontSize);
     }
     else if (component == "Sprite")
     {
-        auto path = lua->PopString(ic.Get());
-        int layer = lua->PopInt(ic.Get());
+        auto path = lua.PopString(ic.Get());
+        int layer = lua.PopInt(ic.Get());
 
         Image image = LoadImage(path.c_str());
         Texture tex = LoadTextureFromImage(image);
@@ -241,46 +248,46 @@ int Lua::AddComponent(lua_State *lua_state)
     }
     else if (component == "Scale")
     {
-        float scale = lua->PopFloat(ic.Get());
+        float scale = lua.PopFloat(ic.Get());
         std::cout << scale << "\n";
         Scene::Get()->AddComponent<Scale>(entity, scale);
     }
     else if (component == "Speed")
     {
-        float speed = lua->PopFloat(ic.Get());
+        float speed = lua.PopFloat(ic.Get());
         Scene::Get()->AddComponent<CharacterController>(entity, speed);
     }
     else if (component == "Velocity")
     {
-        float maxVelocity = lua->PopFloat(ic.Get());
-        float vX = lua->PopFloat(ic.Get());
-        float vY = lua->PopFloat(ic.Get());
+        float maxVelocity = lua.PopFloat(ic.Get());
+        float vX = lua.PopFloat(ic.Get());
+        float vY = lua.PopFloat(ic.Get());
 
         Scene::Get()->AddComponent<Velocity>(entity, maxVelocity, Vector2{vX, vY});
     }
     else if (component == "BoxCollider")
     {
-        float width = lua->PopFloat(ic.Get());
-        float height = lua->PopFloat(ic.Get());
-        float offsetX = lua->PopFloat(ic.Get());
-        float offsetY = lua->PopFloat(ic.Get());
-        bool solid = lua->PopBool(ic.Get());
+        float width = lua.PopFloat(ic.Get());
+        float height = lua.PopFloat(ic.Get());
+        float offsetX = lua.PopFloat(ic.Get());
+        float offsetY = lua.PopFloat(ic.Get());
+        bool solid = lua.PopBool(ic.Get());
 
         Scene::Get()->AddComponent<BoxCollider>(entity, Vector2{width, height}, Vector2{offsetX, offsetY}, solid);
     }
     else if (component == "TypeName")
     {
-        std::string name = lua->PopString(ic.Get());
+        std::string name = lua.PopString(ic.Get());
         Scene::Get()->AddComponent<TypeName>(entity, name);
     }
     else if (component == "CharacterController")
     {
-        float speed = lua->PopFloat(ic.Get());
+        float speed = lua.PopFloat(ic.Get());
         Scene::Get()->AddComponent<CharacterController>(entity, speed);
     }
     else if (component == "LuaBehaviour")
     {
-        std::string path = lua->PopString(ic.Get());
+        std::string path = lua.PopString(ic.Get());
 
         if (luaL_dofile(lua_state, path.c_str()) != LUA_OK)
         {
@@ -319,79 +326,84 @@ int Lua::AddComponent(lua_State *lua_state)
     {
         Scene::Get()->AddComponent<Selector>(entity);
     }
+    else if (component == "Health")
+    {
+        int health = lua.PopInt(ic.Get());
+        Scene::Get()->AddComponent<Health>(entity, health);
+    }
     else
         throw std::runtime_error(std::string("Dis is no component, here atleast") + std::string(component));
 
-    auto func = lua_tocfunction(lua_state, -1);
+    // auto func = lua_tocfunction(lua_state, -1);
 
-    lua_settop(lua->GetState(), -ic.Peak());
+    lua_settop(lua.GetState(), -ic.Peak());
 
     return 0;
 }
 int Lua::GetComponent(lua_State *lua_state)
 {
     auto ic = Incrementer(1);
-    Lua *lua = Lua::Get();
-    const entt::entity entity = (entt::entity)lua->PopInt(ic.Get());
-    std::string component = lua->PopString(ic.Get());
+    Lua lua(lua_state);
+    const entt::entity entity = (entt::entity)lua.PopInt(ic.Get());
+    std::string component = lua.PopString(ic.Get());
     Lua::Get()->DumpStack();
-    lua_settop(lua->GetState(), -ic.Peak());
+    lua_settop(lua.GetState(), -ic.Peak());
 
     Scene *scene = Scene::Get();
 
     if (component == "Position")
     {
         auto pos = scene->GetComponent<Position>(entity).pos;
-        lua->PushFloat(pos.x);
-        lua->PushFloat(pos.y);
+        lua.PushFloat(pos.x);
+        lua.PushFloat(pos.y);
         return 2;
     }
     else if (component == "Box")
     {
         auto box = scene->GetComponent<Box>(entity).rectangle;
-        lua->PushFloat(box.x);
-        lua->PushFloat(box.y);
-        lua->PushFloat(box.width);
-        lua->PushFloat(box.height);
+        lua.PushFloat(box.x);
+        lua.PushFloat(box.y);
+        lua.PushFloat(box.width);
+        lua.PushFloat(box.height);
         return 4;
     }
     else if (component == "Colour")
     {
         auto colour = scene->GetComponent<Colour>(entity).color;
-        lua->PushInt(colour.r);
-        lua->PushInt(colour.g);
-        lua->PushInt(colour.b);
-        lua->PushInt(colour.a);
+        lua.PushInt(colour.r);
+        lua.PushInt(colour.g);
+        lua.PushInt(colour.b);
+        lua.PushInt(colour.a);
         return 4;
     }
     else if (component == "Speed")
     {
         auto speed = scene->GetComponent<Speed>(entity).speed;
-        lua->PushFloat(speed.x);
-        lua->PushFloat(speed.y);
+        lua.PushFloat(speed.x);
+        lua.PushFloat(speed.y);
         return 2;
     }
     else if (component == "Clickable")
     {
         auto funcName = scene->GetComponent<Clickable>(entity).luaFuncName;
-        lua->PushString(funcName);
+        lua.PushString(funcName);
         return 1;
     }
     else if (component == "Text")
     {
         auto text = scene->GetComponent<Text>(entity);
 
-        lua->PushInt(text.color.r);
-        lua->PushInt(text.color.g);
-        lua->PushInt(text.color.b);
-        lua->PushInt(text.color.a);
+        lua.PushInt(text.color.r);
+        lua.PushInt(text.color.g);
+        lua.PushInt(text.color.b);
+        lua.PushInt(text.color.a);
 
-        lua->PushString(text.text);
+        lua.PushString(text.text);
 
-        lua->PushFloat(text.pos.x);
-        lua->PushFloat(text.pos.y);
+        lua.PushFloat(text.pos.x);
+        lua.PushFloat(text.pos.y);
 
-        lua->PushFloat(text.fontSize);
+        lua.PushFloat(text.fontSize);
 
         return 8;
     }
@@ -402,7 +414,7 @@ int Lua::GetComponent(lua_State *lua_state)
     else if (component == "Scale")
     {
         auto scale = scene->GetComponent<Scale>(entity).scale;
-        lua->PushFloat(scale);
+        lua.PushFloat(scale);
         return 1;
     }
     else if (component == "CharacterController")
@@ -412,29 +424,29 @@ int Lua::GetComponent(lua_State *lua_state)
     else if (component == "Velocity")
     {
         auto velocity = scene->GetComponent<Velocity>(entity);
-        lua->PushFloat(velocity.maxVelocity);
-        lua->PushFloat(velocity.velocity.x);
-        lua->PushFloat(velocity.velocity.y);
+        lua.PushFloat(velocity.maxVelocity);
+        lua.PushFloat(velocity.velocity.x);
+        lua.PushFloat(velocity.velocity.y);
         return 3;
     }
     else if (component == "BoxCollider")
     {
         auto boxCol = scene->GetComponent<BoxCollider>(entity);
 
-        lua->PushFloat(boxCol.size.x);
-        lua->PushFloat(boxCol.size.y);
+        lua.PushFloat(boxCol.size.x);
+        lua.PushFloat(boxCol.size.y);
 
-        lua->PushFloat(boxCol.offset.x);
-        lua->PushFloat(boxCol.offset.y);
+        lua.PushFloat(boxCol.offset.x);
+        lua.PushFloat(boxCol.offset.y);
 
-        lua->PushBool(boxCol.solid);
+        lua.PushBool(boxCol.solid);
 
         return 5;
     }
     else if (component == "TypeName")
     {
         auto typen = scene->GetComponent<TypeName>(entity).typeName;
-        lua->PushString(typen);
+        lua.PushString(typen);
         return 1;
     }
     else if (component == "Selector")
@@ -454,10 +466,10 @@ int Lua::GetComponent(lua_State *lua_state)
 int Lua::RemoveComponent(lua_State *lua_state)
 {
     auto ic = Incrementer(1);
-    Lua *lua = Lua::Get();
-    const entt::entity entity = (entt::entity)lua->PopInt(ic.Get());
-    std::string component = lua->PopString(ic.Get());
-    lua_settop(lua->GetState(), -ic.Peak());
+    Lua lua(lua_state);
+    const entt::entity entity = (entt::entity)lua.PopInt(ic.Get());
+    std::string component = lua.PopString(ic.Get());
+    lua_settop(lua.GetState(), -ic.Peak());
     Scene *scene = Scene::Get();
 
     if (component == "Position")

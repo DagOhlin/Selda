@@ -7,6 +7,7 @@ class Lua
 {
 public:
     Lua();
+    Lua(lua_State *L);
     ~Lua();
 
     void DoFile(const char *file);
@@ -46,4 +47,5 @@ public:
 
 private:
     lua_State *lua_state = nullptr;
+    bool owns_lua_state = false;
 };
