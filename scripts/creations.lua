@@ -24,6 +24,28 @@ creatables = {
         
         return ent
     end,
+
+    key = function(x, y)
+        local ent = CreateEntity()
+        AddComponent(ent, "Sprite", "textures/Key.png", 1)
+        AddComponent(ent, "Position", x, y)
+        AddComponent(ent, "LuaBehaviour", "./scripts/key.lua")
+        -- AddComponent(ent, "TypeName", "Wall")
+        
+        return ent
+    end,
+
+    door = function(x, y)
+        local ent = CreateEntity()
+        AddComponent(ent, "Sprite", "textures/Door.png", 1)
+        AddComponent(ent, "Position", x, y)
+        AddComponent(ent, "Box", x, y, 16, 16)
+        AddComponent(ent, "BoxCollider", 16, 16, 0, 0, true);
+        AddComponent(ent, "LuaBehaviour", "./scripts/door.lua")
+        -- AddComponent(ent, "TypeName", "Wall")
+        
+        return ent
+    end,
     
     enemy = function(x, y)
         local ent = CreateEntity()
@@ -82,6 +104,10 @@ creatables = {
 
         return button
     end
+
+    
+
+
     -- ,
 
     -- killMonster = function(monsterID)

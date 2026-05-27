@@ -6,20 +6,38 @@ function player:BehaviorLoop()
     local timer = 0
     local hitCooldown = 1
 
+    local swordEntity = nil
+    local swordDespawnTime = 0
+    local didHit = false
+
     while true do
         
         local deltaTime = coroutine.yield() --works well but not sure when you might want to pass other things
         timer = timer + deltaTime
+        
+        if swordEntity ~= nil and timer >= swordDespawnTime then
+            RemoveEntity(swordEntity)
+            swordEntity = nil
+        end
+
+        if swordEntity ~= nil then
+            
+            AddComponent(swordEntity, "Position", px, py)
+        end
 
         px, py = GetComponent(self.ID, "Position")
 
         if IsPressed(" ") and (lastHit + hitCooldown) < timer then
             lastHit = timer
+            didHit = false
+            
+
             for index, monster in ipairs(enemies) do
                 ex, ey = GetComponent(monster, "Position")
                 dist = math.sqrt((ex - px) * (ex - px) + (ey - py) * (ey - py))
 
                 if dist < 40 then 
+                    didHit = true
                     monsterHealth = GetComponent(monster, "Health")
                     monsterHealth = monsterHealth - 1
                     if monsterHealth <= 0 then
@@ -31,6 +49,18 @@ function player:BehaviorLoop()
 
                 end
             end
+
+            swordEntity = CreateEntity()
+            
+            if (didHit == true) then
+                AddComponent(swordEntity, "Sprite", "textures/bloodSword.png", 2)
+            else
+                AddComponent(swordEntity, "Sprite", "textures/sword.png", 2)
+            end
+            AddComponent(swordEntity, "Scale", 4)
+            AddComponent(swordEntity, "Position", px, py)
+            
+            swordDespawnTime = timer + 0.25
         end
         
     end
