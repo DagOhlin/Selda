@@ -36,6 +36,14 @@ function LoadScene:CreateEntities(x, y, block)
             entity = creatables.ground(x, y)
             AddComponent(entity, "Scale", scale)
             entity = creatables.enemy(x, y)
+        elseif (object == "Key") then
+            entity = creatables.ground(x, y)
+            AddComponent(entity, "Scale", scale)
+            entity = creatables.key(x, y)
+        elseif (object == "Door") then
+            entity = creatables.ground(x, y)
+            AddComponent(entity, "Scale", scale)
+            entity = creatables.door(x, y)
         elseif (object == "Player") then
             entity = creatables.ground(x, y)
             AddComponent(entity, "Scale", scale)
