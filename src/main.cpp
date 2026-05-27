@@ -32,19 +32,56 @@ int main()
     Scene *scene = Scene::Get();
 
     SetTargetFPS(60); // Set our game to run at 60 frames-per-second
+
+    RenderTexture2D canvas = LoadRenderTexture(screenWidth, screenHeight);
+    
+    SetTextureFilter(canvas.texture, TEXTURE_FILTER_POINT);//this makes the pixels nu blury when scaled
     //--------------------------------------------------------------------------------------
 
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
-        // Tick
+        if (IsKeyPressed(KEY_F11)) 
+        {
+            if (IsWindowFullscreen()) 
+            {
+                ToggleFullscreen();
+                SetWindowSize(screenWidth, screenHeight); 
+            } 
+            else 
+            {
+                int monitor = GetCurrentMonitor();
+                
+                SetWindowSize(GetMonitorWidth(monitor), GetMonitorHeight(monitor));
+                ToggleFullscreen();
+            }
+        }
+        // new stuff 
+
+        float scaleX = (float)GetScreenWidth() / screenWidth;
+        float scaleY = (float)GetScreenHeight() / screenHeight;
+        SetMouseScale(1.0f / scaleX, 1.0f / scaleY);
+        SetMouseOffset(0, 0);
+
+        BeginTextureMode(canvas);
+            ClearBackground(RAYWHITE);
+
+            scene->Update();
+            DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+        EndTextureMode();
+
         BeginDrawing();
+            ClearBackground(BLACK); 
 
-        ClearBackground(RAYWHITE);
+            Rectangle sourceRec = { 0.0f, 0.0f, (float)canvas.texture.width, -(float)canvas.texture.height };
+            
+            Rectangle destRec = { 0.0f, 0.0f, (float)GetScreenWidth(), (float)GetScreenHeight() };
+            
+            Vector2 origin = { 0.0f, 0.0f };
 
-        // Draw objects
-        scene->Update();
-        DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+            DrawTexturePro(canvas.texture, sourceRec, destRec, origin, 0.0f, WHITE);
+
+        // Tick
 
         EndDrawing();
         //----------------------------------------------------------------------------------
