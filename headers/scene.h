@@ -36,7 +36,7 @@ public:
     static Scene *Get();
     static void Save();
 
-    Vector2 player;
+    Vector2 player{150, 220};
 
 private:
     entt::registry registry;
