@@ -57,8 +57,8 @@ struct CollisionSystem
             if (vel.velocity.y != 0.0f)
             {
                 Rectangle nextRectY = {
-                    pos.pos.x + collider.offset.x + vel.velocity.x * dt,
-                    pos.pos.y + collider.offset.y + vel.velocity.y * dt,
+                    pos.pos.x + collider.offset.x * scale + vel.velocity.x * dt,
+                    pos.pos.y + collider.offset.y * scale + vel.velocity.y * dt,
                     collider.size.x * scale,
                     collider.size.y * scale};
 
@@ -71,8 +71,10 @@ struct CollisionSystem
                     float otherScale = maybeOtherScale ? maybeOtherScale->scale : 1;
 
                     Rectangle otherRect = {
-                        otherPos.pos.x + otherCollider.offset.x, otherPos.pos.y + otherCollider.offset.y,
-                        otherCollider.size.x * otherScale, otherCollider.size.y * otherScale};
+                        otherPos.pos.x + otherCollider.offset.x * otherScale, 
+                        otherPos.pos.y + otherCollider.offset.y * otherScale,
+                        otherCollider.size.x * otherScale, 
+                        otherCollider.size.y * otherScale};
 
                     if (CheckCollisionRecs(nextRectY, otherRect))
                     {
