@@ -81,7 +81,7 @@ function LoadScene:CreateEditorEntities(x, y, block)
             entity = creatables.key(x, y)
         elseif (object == "Door") then
             entity = creatables.door(x, y)
-            goto continue
+            RemoveComponent(entity, "Box")
         elseif (object == "Boss") then
             entity = creatables.boss(x, y)
         elseif (object == "Chest") then
@@ -89,7 +89,6 @@ function LoadScene:CreateEditorEntities(x, y, block)
         end
         
         AddComponent(entity, "TypeName", object)
-        ::continue::
     end
 end
 

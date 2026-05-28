@@ -77,7 +77,7 @@ creatables = {
         AddComponent(ent, "Sprite", "textures/Boss.png", 1)
         AddComponent(ent, "Position", x, y)
         AddComponent(ent, "LuaBehaviour", "./scripts/boss.lua")
-        AddComponent(ent, "Health", 1)
+        AddComponent(ent, "Health", 15)
         table.insert(bosses, ent)
 
         return ent
@@ -100,7 +100,7 @@ creatables = {
         playerID = ent
         AddComponent(ent, "Sprite", "textures/Blink2.png", 1)
         AddComponent(ent, "Position", x, y)
-        AddComponent(ent, "CharacterController", 800.0);
+        AddComponent(ent, "CharacterController", 300.0);
         AddComponent(ent, "Velocity", 50.0, 0.0, 0.0);
         AddComponent(ent, "BoxCollider", 7 , 12 , 4.5, 3, true);
         AddComponent(ent, "LuaBehaviour", "./scripts/player.lua")
